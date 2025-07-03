@@ -192,84 +192,47 @@
   const submitBtn = document.getElementById('submitBtn');
   const form = document.getElementById('cotizacionForm');
 
-  // Función para ocultar todas las preguntas profesionales
   function ocultarPreguntas() {
     preguntas.forEach(p => p.classList.add('hidden'));
   }
 
-  // Muestra la primera pregunta profesional cuando el usuario dice "Sí"
-  profesional.addEventListener('change', () => {
-    if (profesional.value === 'si') {
-      cotizacionPersonalizada.classList.add('hidden');
-      ocultarPreguntas();
-      preguntas[0].classList.remove('hidden');
-      submitBtn.textContent = 'Obtener cotización';
+  function actualizarBotonVisibilidad() {
+    if (
+      profesional.value === "si" &&
+      document.getElementById("tipoPlano").value !== "" &&
+      document.getElementById("cantidadAreas").value !== "" &&
+      document.getElementById("entregaExpress").value !== ""
+    ) {
+      submitBtn.classList.remove("hidden");
+    } else if (profesional.value === "no" || cotizacionPersonalizada.classList.contains("visible")) {
+      submitBtn.classList.remove("hidden");
     } else {
-      // Si NO es profesional, muestra cotización personalizada
-      cotizacionPersonalizada.classList.remove('hidden');
-      ocultarPreguntas();
-      submitBtn.textContent = 'Solicitar revisión';
-    }
-  });
-
-  // Función para manejar la visibilidad de preguntas secuenciales
-  function handleNextQuestion(currentIndex, selectElement) {
-    const selectedValue = selectElement.value;
-
-    if (selectedValue === 'otro') {
-      // Si escoge "Otro" abrir cotización personalizada
-      cotizacionPersonalizada.classList.remove('hidden');
-      ocultarPreguntas();
-      submitBtn.textContent = 'Solicitar revisión';
-      return;
-    } else {
-      // Ocultar cotización personalizada si estaba visible
-      cotizacionPersonalizada.classList.add('hidden');
-      submitBtn.textContent = 'Obtener cotización';
-
-      // Mostrar la siguiente pregunta si existe
-      if (currentIndex + 1 < preguntas.length) {
-        preguntas[currentIndex + 1].classList.remove('hidden');
-      }
+      submitBtn.classList.add("hidden");
     }
   }
 
-  // Agregar event listeners a cada pregunta profesional
+  profesional.addEventListener('change', () => {
+    ocultarPreguntas();
+    submitBtn.classList.add('hidden');
+
+    if (profesional.value === 'si') {
+      cotizacionPersonalizada.classList.add('hidden');
+      preguntas[0].classList.remove('hidden');
+      submitBtn.textContent = 'Obtener cotización';
+    } else {
+      cotizacionPersonalizada.classList.remove('hidden');
+      cotizacionPersonalizada.classList.add('visible');
+      submitBtn.textContent = 'Solicitar revisión';
+      actualizarBotonVisibilidad();
+    }
+  });
+
   preguntas.forEach((preguntaDiv, idx) => {
     const select = preguntaDiv.querySelector('select');
     select.addEventListener('change', () => {
-      handleNextQuestion(idx, select);
-    });
-  });
+      const valor = select.value;
 
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
-
-    if (!cotizacionPersonalizada.classList.contains('hidden')) {
-      // Enviar cotización personalizada (puedes integrar Formspree o EmailJS aquí)
-      // Para demo: redirigimos a página con valor fijo $20 (revisión)
-      window.location.href = '/productos/cotizacion/personalizada/resultado/;
-      return;
-    }
-
-    // Cotización normal: calcular total
-    let total = 0;
-    // Obtener precios desde data-price para cada respuesta
-    const tipoPlanoSelect = document.getElementById('tipoPlano');
-    const cantidadAreasSelect = document.getElementById('cantidadAreas');
-    const entregaExpressSelect = document.getElementById('entregaExpress');
-
-    total += Number(tipoPlanoSelect.options[tipoPlanoSelect.selectedIndex].dataset.price || 0);
-    total += Number(cantidadAreasSelect.options[cantidadAreasSelect.selectedIndex].dataset.price || 0);
-    total += Number(entregaExpressSelect.options[entregaExpressSelect.selectedIndex].dataset.price || 0);
-
-    // Asegurar mínimo 400 AUD
-    if (total < 400) total = 400;
-
-    // Redirigir a la página resultado con total en query string
-    window.location.href = `resultado/?total=${total}`;
-  });
-</script>
-
-</body>
-</html>
+      if (valor === "otro") {
+        cotizacionPersonalizada.classList.remove('hidden');
+        cotizacionPersonalizada.classList.add('visible');
+        ocultarPreguntas(

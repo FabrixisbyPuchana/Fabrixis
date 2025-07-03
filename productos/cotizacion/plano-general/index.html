@@ -104,7 +104,6 @@
 
   <form id="cotizacionForm">
 
-    <!-- Pregunta 0: Profesional -->
     <div class="pregunta" id="pregunta0">
       <label for="profesional">¿Eres un profesional con licencia?</label>
       <select id="profesional" name="profesional" required>
@@ -114,7 +113,6 @@
       </select>
     </div>
 
-    <!-- Preguntas para profesional, mostradas secuencialmente -->
     <div class="pregunta hidden" id="pregunta1">
       <label for="tipoPlano">Tipo de plano</label>
       <select id="tipoPlano" name="tipoPlano" required>
@@ -147,7 +145,6 @@
       </select>
     </div>
 
-    <!-- Cotización personalizada (hidden by default) -->
     <div id="cotizacionPersonalizada" class="hidden">
       <h2>Cotización personalizada</h2>
 
@@ -177,7 +174,7 @@
       </select>
     </div>
 
-    <button type="submit" class="btn" id="submitBtn">Obtener cotización</button>
+    <button type="submit" class="btn hidden" id="submitBtn">Obtener cotización</button>
   </form>
 </main>
 
@@ -235,4 +232,46 @@
       if (valor === "otro") {
         cotizacionPersonalizada.classList.remove('hidden');
         cotizacionPersonalizada.classList.add('visible');
-        ocultarPreguntas(
+        ocultarPreguntas();
+        submitBtn.textContent = 'Solicitar revisión';
+        actualizarBotonVisibilidad();
+      } else {
+        if (idx + 1 < preguntas.length) {
+          preguntas[idx + 1].classList.remove('hidden');
+        }
+        cotizacionPersonalizada.classList.add('hidden');
+        cotizacionPersonalizada.classList.remove('visible');
+        submitBtn.textContent = 'Obtener cotización';
+        actualizarBotonVisibilidad();
+      }
+    });
+  });
+
+  const selects = document.querySelectorAll('select');
+  selects.forEach(select => {
+    select.addEventListener('change', actualizarBotonVisibilidad);
+  });
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    if (!submitBtn.classList.contains('hidden') && submitBtn.textContent === "Solicitar revisión") {
+      const urgencia = document.getElementById("urgencia");
+      const extraUrgencia = urgencia.value === "si" ? 20 : 0;
+      const total = 20 + extraUrgencia;
+      window.location.href = `/productos/cotizacion/personalizada/resultado/?total=${total}`;
+      return;
+    }
+
+    let total = 0;
+    total += Number(document.getElementById('tipoPlano').selectedOptions[0].dataset.price || 0);
+    total += Number(document.getElementById('cantidadAreas').selectedOptions[0].dataset.price || 0);
+    total += Number(document.getElementById('entregaExpress').selectedOptions[0].dataset.price || 0);
+
+    if (total < 400) total = 400;
+    window.location.href = `resultado/?total=${total}`;
+  });
+</script>
+
+</body>
+</html>

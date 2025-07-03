@@ -60,8 +60,8 @@
       border: 1px solid #ccc;
       font-size: 1rem;
     }
-    .btn, .btn-seguir {
-      margin-top: 1.2rem;
+    .btn {
+      margin-top: 1rem;
       background-color: #1E3A8A;
       color: white;
       border: none;
@@ -72,7 +72,7 @@
       font-weight: 600;
       transition: background-color 0.3s;
     }
-    .btn:hover, .btn-seguir:hover {
+    .btn:hover {
       background-color: #324bc1;
     }
     .hidden {
@@ -88,7 +88,7 @@
 </header>
 
 <nav>
-  <a href="/inicio/">Inicio</a>
+  <a href="/">Inicio</a>
   <a href="/productos/">Productos</a>
   <a href="/nosotros/">Sobre Nosotros</a>
 </nav>
@@ -96,9 +96,11 @@
 <main>
   <h1>Cotización: Transcripción de planos</h1>
 
-  <form id="formulario">
+  <form id="cotizacionForm">
+
+    <!-- Pregunta 1: Tipo de formato entregas -->
     <div id="pregunta1">
-      <label>¿Qué tipo de formato entregas?</label>
+      <label for="formatoOriginal">¿Qué tipo de formato entregas?</label>
       <select id="formatoOriginal" required>
         <option value="">Selecciona una opción</option>
         <option value="0">Escaneado claro</option>
@@ -107,63 +109,86 @@
         <option value="100">Mixto</option>
         <option value="otro">Otro</option>
       </select>
-      <button type="button" class="btn-seguir" id="btn1" onclick="continuarFormato()">Continuar</button>
+      <button type="button" class="btn" id="continuar1">Continuar</button>
     </div>
 
+    <!-- Pregunta 2: Cantidad de planos -->
     <div id="pregunta2" class="hidden">
-      <label>¿Cuántos planos vas a transcribir?</label>
-      <select id="cantidadPlanos">
+      <label for="cantidadPlanos">¿Cuántos planos vas a transcribir?</label>
+      <select id="cantidadPlanos" required>
+        <option value="">Selecciona una opción</option>
         <option value="0">1 a 2 planos</option>
         <option value="75">3 a 5 planos</option>
         <option value="140">6 a 8 planos</option>
         <option value="215">8 a 10 planos</option>
         <option value="otro">Otro</option>
       </select>
-      <button type="button" class="btn-seguir" id="btn2" onclick="continuarCantidad()">Continuar</button>
+      <button type="button" class="btn" id="continuar2">Continuar</button>
     </div>
 
+    <!-- Pregunta 3: Formato de entrega -->
     <div id="pregunta3" class="hidden">
-      <label>¿Formato de entrega?</label>
-      <select id="formatoFinal">
+      <label for="formatoFinal">¿Formato de entrega?</label>
+      <select id="formatoFinal" required>
+        <option value="">Selecciona una opción</option>
         <option value="0">DWG</option>
         <option value="30">PDF</option>
         <option value="55">Ambos</option>
         <option value="otro">Otro</option>
       </select>
-      <button type="submit" class="btn" id="btnEnviar">Obtener cotización</button>
+      <button type="submit" class="btn" id="obtenerBtn">Obtener cotización</button>
     </div>
+
   </form>
 </main>
 
 <script>
-  function continuarFormato() {
-    const valor = document.getElementById('formatoOriginal').value;
-    if (valor === "otro") {
-      window.location.href = "/productos/cotizacion/personalizado/";
-    } else {
-      document.getElementById('btn1').classList.add('hidden');
-      document.getElementById('pregunta2').classList.remove('hidden');
-    }
-  }
+  const pregunta2 = document.getElementById('pregunta2');
+  const pregunta3 = document.getElementById('pregunta3');
+  const continuar1 = document.getElementById('continuar1');
+  const continuar2 = document.getElementById('continuar2');
 
-  function continuarCantidad() {
-    const valor = document.getElementById('cantidadPlanos').value;
-    if (valor === "otro") {
+  continuar1.addEventListener('click', () => {
+    const formatoOriginal = document.getElementById('formatoOriginal').value;
+    if (formatoOriginal === "otro") {
       window.location.href = "/productos/cotizacion/personalizado/";
-    } else {
-      document.getElementById('btn2').classList.add('hidden');
-      document.getElementById('pregunta3').classList.remove('hidden');
+    } else if (formatoOriginal !== "") {
+      pregunta2.classList.remove("hidden");
+      continuar1.style.display = "none";
     }
-  }
+  });
 
-  document.getElementById('formulario').addEventListener('submit', function(e) {
+  continuar2.addEventListener('click', () => {
+    const cantidadPlanos = document.getElementById('cantidadPlanos').value;
+    if (cantidadPlanos === "otro") {
+      window.location.href = "/productos/cotizacion/personalizado/";
+    } else if (cantidadPlanos !== "") {
+      pregunta3.classList.remove("hidden");
+      continuar2.style.display = "none";
+    }
+  });
+
+  document.getElementById("cotizacionForm").addEventListener("submit", function(e) {
     e.preventDefault();
+
     const base = 200;
+    const formatoOriginal = document.getElementById("formatoOriginal").value;
+    const cantidadPlanos = document.getElementById("cantidadPlanos").value;
+    const formatoFinal = document.getElementById("formatoFinal").value;
+
+    // Si alguna respuesta es "otro" (no debería pasar si seguimos lógica), redirigir a personalizada
+    if ([formatoOriginal, cantidadPlanos, formatoFinal].includes("otro")) {
+      window.location.href = "/productos/cotizacion/personalizado/";
+      return;
+    }
+
     const totalExtras = 
-      parseInt(document.getElementById('formatoOriginal').value || 0) +
-      parseInt(document.getElementById('cantidadPlanos').value || 0) +
-      parseInt(document.getElementById('formatoFinal').value || 0);
+      parseInt(formatoOriginal || 0) + 
+      parseInt(cantidadPlanos || 0) + 
+      parseInt(formatoFinal || 0);
+
     const total = base + totalExtras;
+
     window.location.href = `/productos/cotizacion/transcripcion/resultado/?total=${total}`;
   });
 </script>

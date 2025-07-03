@@ -140,7 +140,6 @@
   </footer>
 
   <script>
-    // Carga el header dinámicamente
     fetch("/componentes/header.html")
       .then(response => response.text())
       .then(data => {
@@ -195,11 +194,20 @@
       const formatoEntrega = parseInt(document.getElementById('formatoEntrega').value) || 0;
       const cantidadPlanos = parseInt(document.getElementById('cantidadPlanos').value) || 0;
       const formatoFinal = parseInt(document.getElementById('formatoFinal').value) || 0;
-
       const total = base + formatoEntrega + cantidadPlanos + formatoFinal;
 
-      // Redirigir sin mostrar total en la URL
-      sessionStorage.setItem('fabrixis_total', total);
+      // Limpiar otras cotizaciones
+      sessionStorage.removeItem('cotizacionPlanoGeneral');
+      sessionStorage.removeItem('cotizacionRevision');
+      sessionStorage.removeItem('cotizacionPersonalizada');
+
+      // Guardar correctamente la cotización
+      const cotizacion = {
+        tipoCotizacion: 'transcripcion',
+        total: total
+      };
+      sessionStorage.setItem('cotizacionTranscripcion', JSON.stringify(cotizacion));
+
       window.location.href = '/productos/cotizacion/resultado/';
     });
   </script>

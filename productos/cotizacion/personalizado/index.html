@@ -80,6 +80,9 @@
       <label for="descripcionSolicitud">Describe tu solicitud *</label>
       <textarea id="descripcionSolicitud" name="descripcionSolicitud" required></textarea>
 
+      <label for="archivos">Sube archivos (PDF/JPG/PNG, máx. 3)</label>
+      <input type="file" id="archivos" name="archivos" accept=".pdf,.jpg,.jpeg,.png" multiple />
+
       <label for="urgencia">¿Deseas respuesta urgente (menos de 24h)?</label>
       <select id="urgencia" name="urgencia" required>
         <option value="" disabled selected>Selecciona una opción</option>
@@ -107,46 +110,48 @@
         `;
       });
 
+    // Manejo de formulario
     document.getElementById('formPersonalizada').addEventListener('submit', function(e){
       e.preventDefault();
 
+      // Validación
       if (!this.checkValidity()) {
         this.reportValidity();
         return;
       }
 
+      // Recoger datos
       const nombre = this.nombre.value.trim();
       const telefono = this.telefono.value.trim();
       const correo = this.correo.value.trim();
       const nombreProyecto = this.nombreProyecto.value.trim();
       const descripcionSolicitud = this.descripcionSolicitud.value.trim();
-
       const urgenciaSelect = this.urgencia;
-      const urgenciaOption = urgenciaSelect.options[urgenciaSelect.selectedIndex];
-      const urgenciaValue = urgenciaOption.value;
-      // Asegurar que el data-price esté definido y se interprete como número
-      const urgenciaExtra = Number(urgenciaOption.dataset.price) || 0;
+      const urgencia = urgenciaSelect.options[urgenciaSelect.selectedIndex].value;
+      const urgenciaExtra = Number(urgenciaSelect.options[urgenciaSelect.selectedIndex].dataset.price) || 0;
 
-      // Base fija
-      const base = 20;
-      // Calcular total correctamente como número
-      const total = base + urgenciaExtra;
+      // 🔥 Limpiar otras cotizaciones automáticas
+      sessionStorage.removeItem('cotizacionPlanoGeneral');
+      sessionStorage.removeItem('cotizacionTranscripcion');
+      sessionStorage.removeItem('cotizacionRevision');
 
+      // Guardar cotización personalizada
       const datos = {
         nombre,
         telefono,
         correo,
         nombreProyecto,
         descripcionSolicitud,
-        urgencia: urgenciaValue,
+        urgencia,
         tipoCotizacion: 'personalizada',
-        base,
+        base: 20,
         extraUrgencia: urgenciaExtra,
-        total
+        total: 20 + urgenciaExtra
       };
 
       sessionStorage.setItem('cotizacionPersonalizada', JSON.stringify(datos));
 
+      // Redirigir a página de resultado
       window.location.href = '/productos/cotizacion/resultado/';
     });
   </script>

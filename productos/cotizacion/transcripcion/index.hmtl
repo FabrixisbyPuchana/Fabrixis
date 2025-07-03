@@ -88,7 +88,7 @@
 </header>
 
 <nav>
-  <a href="/">Inicio</a>
+  <a href="/inicio/">Inicio</a>
   <a href="/productos/">Productos</a>
   <a href="/nosotros/">Sobre Nosotros</a>
 </nav>
@@ -170,4 +170,3 @@
 
 </body>
 </html>
-

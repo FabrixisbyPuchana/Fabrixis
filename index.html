@@ -151,6 +151,44 @@
 
     </div>
   </section>
+    <section id="cotizador" style="margin-top: 4rem; padding: 3rem; background: #f8fafc; border-radius: 1rem; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 1000px; margin-left: auto; margin-right: auto;">
+  <h2 style="text-align: center; color: #1E3A8A; font-size: 2rem; margin-bottom: 2rem;">Cotizador dinámico</h2>
+
+  <!-- Producto Selector -->
+  <div style="margin-bottom: 2rem; text-align: center;">
+    <label for="producto" style="font-weight: 600; color: #1E3A8A;">Selecciona un producto:</label><br>
+    <select id="producto" onchange="mostrarFormulario()" style="margin-top: 0.5rem; padding: 0.5rem 1rem; border-radius: 0.5rem; border: 1px solid #ccc;">
+      <option value="">-- Selecciona --</option>
+      <option value="plano">Plano General</option>
+      <option value="transcripcion">Transcripción de Planos</option>
+      <option value="revision">Revisión de Planos</option>
+    </select>
+  </div>
+
+  <!-- Formularios por producto (se mostrarán según selección) -->
+  <div id="formulario-container"></div>
+
+  <!-- Resultado -->
+  <div id="resultado" style="margin-top: 2rem; text-align: center; font-size: 1.2rem; font-weight: 600; color: #1E3A8A;"></div>
+</section>
+
+<script>
+  function mostrarFormulario() {
+    const producto = document.getElementById('producto').value;
+    const container = document.getElementById('formulario-container');
+    const resultado = document.getElementById('resultado');
+    resultado.innerText = '';
+
+    fetch(`formularios/${producto}.html`)
+      .then(response => response.text())
+      .then(html => {
+        container.innerHTML = html;
+        window.scrollTo({ top: container.offsetTop - 100, behavior: 'smooth' });
+      })
+      .catch(() => container.innerHTML = '<p style="color: red; text-align: center;">Formulario no disponible.</p>');
+  }
+</script>
+
 </main>
 
   <footer>

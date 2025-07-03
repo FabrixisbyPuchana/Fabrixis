@@ -1,85 +1,78 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Resultado de Cotización - Fabrixis</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cotización Plano General - Fabrixis</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet" />
   <style>
     body {
       font-family: 'Montserrat', sans-serif;
       background-color: #f4f7fa;
       color: #1E3A8A;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      text-align: center;
       padding: 2rem;
     }
 
     .container {
-      background-color: white;
-      padding: 3rem;
-      border-radius: 1.5rem;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      background: white;
+      max-width: 600px;
+      margin: auto;
+      padding: 2rem;
+      border-radius: 1rem;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
     }
 
     h1 {
-      font-size: 2.5rem;
-      margin-bottom: 1rem;
+      text-align: center;
+      margin-bottom: 2rem;
     }
 
-    p.total {
-      font-size: 2rem;
-      font-weight: bold;
-      margin: 1rem 0 2rem;
+    label {
+      display: block;
+      margin-top: 1.5rem;
+      font-weight: 600;
     }
 
-    .btn-group {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
+    select, button {
+      width: 100%;
+      padding: 0.75rem;
+      margin-top: 0.5rem;
+      border: 1px solid #ccc;
+      border-radius: 0.5rem;
+      font-family: 'Montserrat', sans-serif;
     }
 
-    .btn {
+    button {
       background-color: #1E3A8A;
       color: white;
-      padding: 0.8rem 1.8rem;
-      border: none;
-      border-radius: 0.75rem;
-      font-size: 1rem;
+      font-weight: bold;
+      margin-top: 2rem;
       cursor: pointer;
-      text-decoration: none;
     }
 
-    .btn:hover {
-      background-color: #3749b2;
+    button:hover {
+      background-color: #324bc1;
     }
 
-    @media(min-width: 500px) {
-      .btn-group {
-        flex-direction: row;
-        justify-content: center;
-      }
+    .hidden {
+      display: none;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>Resultado de Cotización</h1>
-    <p class="total" id="totalPrecio">Total estimado: $0 AUD</p>
-    <div class="btn-group">
-      <a href="#" class="btn">Realizar pago</a>
-      <a href="/productos/cotizacion/revision/" class="btn">Solicitar revisión personalizada</a>
-    </div>
-  </div>
+    <h1>Cotización: Plano General</h1>
 
-  <script>
-    const params = new URLSearchParams(window.location.search);
-    const total = params.get("total");
-    document.getElementById("totalPrecio").textContent = `Total estimado: $${total} AUD`;
-  </script>
-</body>
-</html>
+    <form id="formulario">
+      <label for="licencia">¿Eres un profesional con licencia?</label>
+      <select id="licencia" required>
+        <option value="">Selecciona una opción</option>
+        <option value="si">Sí</option>
+        <option value="no">No</option>
+      </select>
+
+      <div id="preguntas" class="hidden">
+        <label for="tipoPlano">Tipo de plano</label>
+        <select id="tipoPlano">
+          <option value="400">Croquis sencillo (Desde $400 AUD)</option>
+          <option value="430">Croqu

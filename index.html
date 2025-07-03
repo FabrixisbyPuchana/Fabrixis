@@ -46,18 +46,11 @@
       font-size: 1.2rem;
       color: #334155;
     }
-
-    footer {
-      background-color: #1E3A8A;
-      color: white;
-      text-align: center;
-      padding: 1rem;
-    }
   </style>
 </head>
 <body>
 
-  <!-- Aquí cargamos dinámicamente el encabezado -->
+  <!-- Cargar dinámicamente el encabezado -->
   <div id="header-container"></div>
 
   <main>
@@ -76,17 +69,23 @@
     </section>
   </main>
 
-  <footer>
-    <p>&copy; 2025 Fabrixis. Todos los derechos reservados.</p>
-  </footer>
+  <!-- Cargar dinámicamente el footer -->
+  <div id="footer-container"></div>
 
-  <!-- Script para incluir el header.html dinámicamente -->
+  <!-- Scripts para incluir header y footer -->
   <script>
     fetch("/componentes/header.html")
       .then(response => response.text())
       .then(data => {
         document.getElementById("header-container").innerHTML = data;
       });
+
+    fetch("/componentes/footer.html")
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById("footer-container").innerHTML = data;
+      });
   </script>
+
 </body>
 </html>

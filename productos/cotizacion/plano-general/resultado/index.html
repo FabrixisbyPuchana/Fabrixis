@@ -16,28 +16,7 @@
       flex-direction: column;
       min-height: 100vh;
     }
-    header {
-      background-color: #1E3A8A;
-      color: white;
-      padding: 1rem;
-      text-align: center;
-    }
-    nav {
-      display: flex;
-      justify-content: center;
-      background-color: #E5E7EB;
-      padding: 0.8rem;
-      gap: 1.5rem;
-    }
-    nav a {
-      color: #1E3A8A;
-      font-weight: 600;
-      text-decoration: none;
-      transition: color 0.3s;
-    }
-    nav a:hover {
-      color: #324bc1;
-    }
+
     main {
       flex-grow: 1;
       max-width: 600px;
@@ -48,18 +27,21 @@
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
       text-align: center;
     }
+
     h1 {
       margin-bottom: 2rem;
       font-weight: 700;
       font-size: 2.5rem;
       color: #1E3A8A;
     }
+
     p.total {
       font-size: 3rem;
       font-weight: 800;
       margin-bottom: 3rem;
       color: #324bc1;
     }
+
     .btn {
       background-color: #1E3A8A;
       color: white;
@@ -73,16 +55,20 @@
       min-width: 140px;
       transition: background-color 0.3s;
     }
+
     .btn:hover {
       background-color: #324bc1;
     }
+
     .btn-secondary {
       background-color: #e5e7eb;
       color: #1E3A8A;
     }
+
     .btn-secondary:hover {
       background-color: #cbd5e1;
     }
+
     .btn-container {
       display: flex;
       justify-content: center;
@@ -93,16 +79,8 @@
 </head>
 <body>
 
-<header>
-  <h1>Fabrixis by Puchana</h1>
-  <p>Precision that plays off</p>
-</header>
-
-<nav>
-  <a href="/">Inicio</a>
-  <a href="/productos/">Productos</a>
-  <a href="/nosotros/">Sobre Nosotros</a>
-</nav>
+<!-- Header reutilizable -->
+<div id="header-container"></div>
 
 <main>
   <h1>Precio Total</h1>
@@ -115,25 +93,30 @@
 </main>
 
 <script>
-  // Leer el total que viene en la URL
+  // Cargar encabezado reutilizable
+  fetch("/componentes/header.html")
+    .then(res => res.text())
+    .then(html => {
+      document.getElementById("header-container").innerHTML = html;
+    });
+
+  // Leer el total desde la URL
   const params = new URLSearchParams(window.location.search);
   let total = params.get('total');
 
-  // Validar total (que sea número y no nulo)
+  // Validar total
   if (!total || isNaN(total)) {
     total = '0';
   }
 
   // Mostrar total formateado
-  const precioTotalEl = document.getElementById('precioTotal');
-  precioTotalEl.textContent = `$${total} AUD`;
+  document.getElementById('precioTotal').textContent = `$${total} AUD`;
 
-  // Botón volver a productos
+  // Navegación
   document.getElementById('volverBtn').addEventListener('click', () => {
     window.location.href = '/productos/';
   });
 
-  // Botón pagar (puedes integrar método de pago aquí)
   document.getElementById('pagarBtn').addEventListener('click', () => {
     alert('Funcionalidad de pago pendiente de integrar.');
   });

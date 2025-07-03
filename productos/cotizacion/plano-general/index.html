@@ -36,7 +36,6 @@
     nav a:hover {
       color: #324bc1;
     }
-
     main {
       max-width: 600px;
       margin: 0 auto;
@@ -77,6 +76,7 @@
       width: 100%;
       font-weight: 700;
       transition: background-color 0.3s;
+      display: none;
     }
     .btn:hover {
       background-color: #324bc1;
@@ -147,7 +147,6 @@
 
     <div id="cotizacionPersonalizada" class="hidden">
       <h2>Cotización personalizada</h2>
-
       <label for="nombre">Nombre completo *</label>
       <input type="text" id="nombre" name="nombre" required />
 
@@ -163,9 +162,6 @@
       <label for="descripcionSolicitud">Describe tu solicitud *</label>
       <textarea id="descripcionSolicitud" name="descripcionSolicitud" required></textarea>
 
-      <label for="archivos">Sube archivos (máximo 3, PDF/JPG/PNG)</label>
-      <input type="file" id="archivos" name="archivos" accept=".pdf,.jpg,.jpeg,.png" multiple />
-
       <label for="urgencia">¿Deseas respuesta urgente en menos de 24h? (+$20 AUD)</label>
       <select id="urgencia" name="urgencia" required>
         <option value="" disabled selected>Selecciona opción</option>
@@ -174,7 +170,7 @@
       </select>
     </div>
 
-    <button type="submit" class="btn hidden" id="submitBtn">Obtener cotización</button>
+    <button type="submit" class="btn" id="submitBtn">Obtener cotización</button>
   </form>
 </main>
 
@@ -191,84 +187,69 @@
 
   function ocultarPreguntas() {
     preguntas.forEach(p => p.classList.add('hidden'));
-  }
-
-  function actualizarBotonVisibilidad() {
-    if (
-      profesional.value === "si" &&
-      document.getElementById("tipoPlano").value !== "" &&
-      document.getElementById("cantidadAreas").value !== "" &&
-      document.getElementById("entregaExpress").value !== ""
-    ) {
-      submitBtn.classList.remove("hidden");
-    } else if (profesional.value === "no" || cotizacionPersonalizada.classList.contains("visible")) {
-      submitBtn.classList.remove("hidden");
-    } else {
-      submitBtn.classList.add("hidden");
-    }
+    submitBtn.style.display = 'none';
   }
 
   profesional.addEventListener('change', () => {
-    ocultarPreguntas();
-    submitBtn.classList.add('hidden');
-
     if (profesional.value === 'si') {
       cotizacionPersonalizada.classList.add('hidden');
+      ocultarPreguntas();
       preguntas[0].classList.remove('hidden');
-      submitBtn.textContent = 'Obtener cotización';
     } else {
       cotizacionPersonalizada.classList.remove('hidden');
-      cotizacionPersonalizada.classList.add('visible');
+      ocultarPreguntas();
       submitBtn.textContent = 'Solicitar revisión';
-      actualizarBotonVisibilidad();
+      submitBtn.style.display = 'block';
     }
   });
+
+  function handleNextQuestion(currentIndex, selectElement) {
+    const selectedValue = selectElement.value;
+    if (selectedValue === 'otro') {
+      cotizacionPersonalizada.classList.remove('hidden');
+      ocultarPreguntas();
+      submitBtn.textContent = 'Solicitar revisión';
+      submitBtn.style.display = 'block';
+    } else {
+      cotizacionPersonalizada.classList.add('hidden');
+      submitBtn.textContent = 'Obtener cotización';
+      if (currentIndex + 1 < preguntas.length) {
+        preguntas[currentIndex + 1].classList.remove('hidden');
+      } else {
+        submitBtn.style.display = 'block';
+      }
+    }
+  }
 
   preguntas.forEach((preguntaDiv, idx) => {
     const select = preguntaDiv.querySelector('select');
     select.addEventListener('change', () => {
-      const valor = select.value;
-
-      if (valor === "otro") {
-        cotizacionPersonalizada.classList.remove('hidden');
-        cotizacionPersonalizada.classList.add('visible');
-        ocultarPreguntas();
-        submitBtn.textContent = 'Solicitar revisión';
-        actualizarBotonVisibilidad();
-      } else {
-        if (idx + 1 < preguntas.length) {
-          preguntas[idx + 1].classList.remove('hidden');
-        }
-        cotizacionPersonalizada.classList.add('hidden');
-        cotizacionPersonalizada.classList.remove('visible');
-        submitBtn.textContent = 'Obtener cotización';
-        actualizarBotonVisibilidad();
-      }
+      handleNextQuestion(idx, select);
     });
-  });
-
-  const selects = document.querySelectorAll('select');
-  selects.forEach(select => {
-    select.addEventListener('change', actualizarBotonVisibilidad);
   });
 
   form.addEventListener('submit', (e) => {
     e.preventDefault();
 
-    if (!submitBtn.classList.contains('hidden') && submitBtn.textContent === "Solicitar revisión") {
-      const urgencia = document.getElementById("urgencia");
-      const extraUrgencia = urgencia.value === "si" ? 20 : 0;
-      const total = 20 + extraUrgencia;
+    if (!cotizacionPersonalizada.classList.contains('hidden')) {
+      const urgencia = document.getElementById('urgencia');
+      const extra = Number(urgencia.options[urgencia.selectedIndex].dataset.price || 0);
+      const total = 20 + extra;
       window.location.href = `/productos/cotizacion/personalizada/resultado/?total=${total}`;
       return;
     }
 
     let total = 0;
-    total += Number(document.getElementById('tipoPlano').selectedOptions[0].dataset.price || 0);
-    total += Number(document.getElementById('cantidadAreas').selectedOptions[0].dataset.price || 0);
-    total += Number(document.getElementById('entregaExpress').selectedOptions[0].dataset.price || 0);
+    const tipoPlano = document.getElementById('tipoPlano');
+    const cantidadAreas = document.getElementById('cantidadAreas');
+    const entregaExpress = document.getElementById('entregaExpress');
+
+    total += Number(tipoPlano.options[tipoPlano.selectedIndex].dataset.price || 0);
+    total += Number(cantidadAreas.options[cantidadAreas.selectedIndex].dataset.price || 0);
+    total += Number(entregaExpress.options[entregaExpress.selectedIndex].dataset.price || 0);
 
     if (total < 400) total = 400;
+
     window.location.href = `resultado/?total=${total}`;
   });
 </script>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Resultado Cotización - Fabrixis</title>
+  <title>Resultado Cotización Personalizada - Fabrixis</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet" />
   <style>
     body {
@@ -12,22 +12,24 @@
       color: #1E3A8A;
       margin: 0;
       padding: 0;
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
-      min-height: 100vh;
     }
     header {
       background-color: #1E3A8A;
       color: white;
-      padding: 1rem;
+      padding: 2rem 1rem;
       text-align: center;
+      flex-shrink: 0;
     }
     nav {
       display: flex;
       justify-content: center;
       background-color: #E5E7EB;
-      padding: 0.8rem;
+      padding: 1rem;
       gap: 1.5rem;
+      flex-shrink: 0;
     }
     nav a {
       color: #1E3A8A;
@@ -41,53 +43,54 @@
     main {
       flex-grow: 1;
       max-width: 600px;
-      margin: 2rem auto;
+      margin: 3rem auto;
       background-color: white;
-      padding: 2rem;
+      padding: 2.5rem 2rem;
       border-radius: 1rem;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
       text-align: center;
     }
     h1 {
-      margin-bottom: 2rem;
       font-weight: 700;
-      font-size: 2.5rem;
-      color: #1E3A8A;
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
     }
-    p.total {
+    .precio-total {
       font-size: 3rem;
       font-weight: 800;
+      color: #16A34A;
       margin-bottom: 3rem;
-      color: #324bc1;
+    }
+    .btn-container {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
     }
     .btn {
       background-color: #1E3A8A;
       color: white;
       border: none;
-      padding: 1rem 2rem;
-      font-size: 1.25rem;
+      padding: 0.75rem 2rem;
+      font-size: 1.1rem;
       border-radius: 0.6rem;
       cursor: pointer;
       font-weight: 700;
-      margin: 0 1rem;
-      min-width: 140px;
+      text-decoration: none;
       transition: background-color 0.3s;
+      min-width: 180px;
+      display: inline-block;
+      text-align: center;
     }
     .btn:hover {
       background-color: #324bc1;
     }
     .btn-secondary {
-      background-color: #e5e7eb;
+      background-color: #E5E7EB;
       color: #1E3A8A;
     }
     .btn-secondary:hover {
       background-color: #cbd5e1;
-    }
-    .btn-container {
-      display: flex;
-      justify-content: center;
-      gap: 1rem;
-      flex-wrap: wrap;
     }
   </style>
 </head>
@@ -105,34 +108,26 @@
 </nav>
 
 <main>
-  <h1>Precio Total</h1>
-  <p class="total" id="precioTotal">$0 AUD</p>
+  <h1>Tu cotización personalizada</h1>
+  <div class="precio-total" id="precioTotal">$0 AUD</div>
 
   <div class="btn-container">
-    <button id="pagarBtn" class="btn">Pagar</button>
-    <button id="volverBtn" class="btn btn-secondary">Volver a Productos</button>
+    <a href="/productos/cotizacion/personalizado/" class="btn btn-secondary">Solicitar revisión personalizada</a>
+    <a href="/productos/" class="btn">Volver a Productos</a>
   </div>
 </main>
 
 <script>
-  // Obtener el total de la URL (query string)
+  // Obtener el total desde el query string
   const params = new URLSearchParams(window.location.search);
-  const total = params.get('total') || '0';
+  const total = params.get('total');
 
-  // Mostrar total formateado
   const precioTotalEl = document.getElementById('precioTotal');
-  precioTotalEl.textContent = $${total} AUD;
-
-  // Botón volver a productos
-  document.getElementById('volverBtn').addEventListener('click', () => {
-    window.location.href = '/productos/';
-  });
-
-  // Botón pagar (pendiente integración)
-  document.getElementById('pagarBtn').addEventListener('click', () => {
-    alert('Funcionalidad de pago pendiente de integrar.');
-    // Aquí podrás añadir la lógica para el pago (Apple Pay, Stripe, etc.)
-  });
+  if(total && !isNaN(total)){
+    precioTotalEl.textContent = `$${parseInt(total)} AUD`;
+  } else {
+    precioTotalEl.textContent = 'Error al calcular el total';
+  }
 </script>
 
 </body>

@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cotización Transcripción de Planos - Fabrixis</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background-color: #f4f7fa;
+      color: #1E3A8A;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #1E3A8A;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+    }
+    nav {
+      display: flex;
+      justify-content: center;
+      background-color: #E5E7EB;
+      padding: 0.8rem;
+      gap: 1.5rem;
+      margin-bottom: 1rem;
+    }
+    nav a {
+      color: #1E3A8A;
+      font-weight: 600;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    nav a:hover {
+      color: #324bc1;
+    }
+    main {
+      max-width: 600px;
+      margin: 0 auto 2rem auto;
+      background-color: white;
+      padding: 2rem;
+      border-radius: 1rem;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+    label {
+      display: block;
+      margin: 1rem 0 0.3rem;
+      font-weight: 600;
+    }
+    select {
+      width: 100%;
+      padding: 0.5rem;
+      border-radius: 0.4rem;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+    }
+    .btn {
+      margin-top: 1rem;
+      background-color: #1E3A8A;
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      border-radius: 0.6rem;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background-color 0.3s;
+    }
+    .btn:hover {
+      background-color: #324bc1;
+    }
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header dinámico -->
+  <div id="header-container"></div>
+
+  <main>
+    <h1>Cotización: Transcripción de Planos</h1>
+
+    <form id="cotizacionForm">
+
+      <!-- Pregunta 1 -->
+      <div id="pregunta1">
+        <label for="formatoEntrega">¿Qué tipo de formato entregas?</label>
+        <select id="formatoEntrega" required>
+          <option value="">Selecciona una opción</option>
+          <option value="0">Escaneado claro</option>
+          <option value="50">Foto de buena calidad</option>
+          <option value="80">Foto borrosa o papel</option>
+          <option value="100">Mixto</option>
+          <option value="otro">Otro</option>
+        </select>
+        <button type="button" class="btn" id="continuar1">Continuar</button>
+      </div>
+
+      <!-- Pregunta 2 -->
+      <div id="pregunta2" class="hidden">
+        <label for="cantidadPlanos">¿Cuántos planos vas a transcribir?</label>
+        <select id="cantidadPlanos" required>
+          <option value="">Selecciona una opción</option>
+          <option value="0">1 a 2 planos</option>
+          <option value="75">3 a 5 planos</option>
+          <option value="140">6 a 8 planos</option>
+          <option value="215">8 a 10 planos</option>
+          <option value="otro">Otro</option>
+        </select>
+        <button type="button" class="btn" id="continuar2">Continuar</button>
+      </div>
+
+      <!-- Pregunta 3 -->
+      <div id="pregunta3" class="hidden">
+        <label for="formatoFinal">¿Cuál formato de entrega quieres?</label>
+        <select id="formatoFinal" required>
+          <option value="">Selecciona una opción</option>
+          <option value="0">DWG</option>
+          <option value="30">PDF</option>
+          <option value="55">Ambos</option>
+          <option value="otro">Otro</option>
+        </select>
+        <button type="button" class="btn" id="continuar3">Continuar</button>
+        <button type="submit" class="btn hidden" id="obtenerBtn">Obtener cotización</button>
+      </div>
+
+    </form>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Fabrixis. Todos los derechos reservados.</p>
+  </footer>
+
+  <script>
+    // Carga el header dinámicamente
+    fetch("/componentes/header.html")
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById("header-container").innerHTML = data;
+      });
+
+    const pregunta1 = document.getElementById('pregunta1');
+    const pregunta2 = document.getElementById('pregunta2');
+    const pregunta3 = document.getElementById('pregunta3');
+
+    const continuar1 = document.getElementById('continuar1');
+    const continuar2 = document.getElementById('continuar2');
+    const continuar3 = document.getElementById('continuar3');
+    const obtenerBtn = document.getElementById('obtenerBtn');
+
+    continuar1.addEventListener('click', () => {
+      const formatoEntrega = document.getElementById('formatoEntrega').value;
+      if (formatoEntrega === "otro") {
+        window.location.href = "/productos/cotizacion/personalizado/";
+      } else if (formatoEntrega !== "") {
+        document.getElementById('formatoEntrega').disabled = true;
+        continuar1.style.display = "none";
+        pregunta2.classList.remove('hidden');
+      }
+    });
+
+    continuar2.addEventListener('click', () => {
+      const cantidadPlanos = document.getElementById('cantidadPlanos').value;
+      if (cantidadPlanos === "otro") {
+        window.location.href = "/productos/cotizacion/personalizado/";
+      } else if (cantidadPlanos !== "") {
+        document.getElementById('cantidadPlanos').disabled = true;
+        continuar2.style.display = "none";
+        pregunta3.classList.remove('hidden');
+      }
+    });
+
+    continuar3.addEventListener('click', () => {
+      const formatoFinal = document.getElementById('formatoFinal').value;
+      if (formatoFinal === "otro") {
+        window.location.href = "/productos/cotizacion/personalizado/";
+      } else if (formatoFinal !== "") {
+        document.getElementById('formatoFinal').disabled = true;
+        continuar3.style.display = "none";
+        obtenerBtn.classList.remove('hidden');
+      }
+    });
+
+    document.getElementById('cotizacionForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const base = 200;
+      const formatoEntrega = parseInt(document.getElementById('formatoEntrega').value) || 0;
+      const cantidadPlanos = parseInt(document.getElementById('cantidadPlanos').value) || 0;
+      const formatoFinal = parseInt(document.getElementById('formatoFinal').value) || 0;
+
+      const total = base + formatoEntrega + cantidadPlanos + formatoFinal;
+
+      // Redirigir sin mostrar total en la URL
+      sessionStorage.setItem('fabrixis_total', total);
+      window.location.href = '/productos/cotizacion/resultado/';
+    });
+  </script>
+
+</body>
+</html>

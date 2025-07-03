@@ -17,7 +17,7 @@
     header {
       background-color: #1E3A8A;
       color: white;
-      padding: 1rem;
+      padding: 1.5rem;
       text-align: center;
     }
 
@@ -26,28 +26,37 @@
       justify-content: center;
       background-color: #E5E7EB;
       padding: 1rem;
-      gap: 1.5rem;
     }
 
     nav a {
+      margin: 0 1rem;
+      text-decoration: none;
       color: #1E3A8A;
       font-weight: 600;
-      text-decoration: none;
       transition: color 0.3s;
     }
 
     nav a:hover {
-      color: #324bc1;
+      color: #3B82F6;
+    }
+
+    main {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem;
+      min-height: 80vh;
     }
 
     .container {
       background-color: white;
-      margin: 2rem auto;
       padding: 3rem;
       border-radius: 1.5rem;
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-      text-align: center;
       max-width: 600px;
+      width: 100%;
     }
 
     h1 {
@@ -97,27 +106,37 @@
   </header>
 
   <nav>
-    <a href="/">Inicio</a>
+    <a href="/inicio/">Inicio</a>
     <a href="/productos/">Productos</a>
-    <a href="/nosotros/">Sobre Nosotros</a>
+    <a href="/nosotros/">Sobre nosotros</a>
   </nav>
 
-  <div class="container">
-    <h1>Resultado de Cotización</h1>
-    <p class="total" id="totalPrecio">Total estimado: $0 AUD</p>
-    <div class="btn-group">
-      <a href="#" class="btn">Realizar pago</a>
-      <a href="/productos/cotizacion/revision/" class="btn">Solicitar revisión personalizada</a>
+  <main>
+    <div class="container">
+      <h1>Resultado de Cotización</h1>
+      <p class="total" id="totalPrecio">Total estimado: $0 AUD</p>
+      <div class="btn-group">
+        <a href="#" class="btn">Realizar pago</a>
+        <a href="/productos/cotizacion/revision/" class="btn">Solicitar revisión personalizada</a>
+      </div>
     </div>
-  </div>
+  </main>
 
   <script>
     const params = new URLSearchParams(window.location.search);
-    let total = Number(params.get("total"));
-    if (params.get("urgente") === "si") {
-      total += 20;
+    const total = parseFloat(params.get("total"));
+    const urgente = params.get("urgente") === "true";
+    let totalFinal = total;
+
+    // Para cotización personalizada con urgencia, se suman $20 extra
+    if (params.get("personalizado") === "true") {
+      totalFinal = 20;
+      if (urgente) {
+        totalFinal += 20;
+      }
     }
-    document.getElementById("totalPrecio").textContent = `Total estimado: $${total} AUD`;
+
+    document.getElementById("totalPrecio").textContent = `Total estimado: $${totalFinal} AUD`;
   </script>
 </body>
 </html>

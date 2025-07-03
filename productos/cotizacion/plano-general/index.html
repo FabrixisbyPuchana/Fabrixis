@@ -53,30 +53,24 @@
       margin: 1rem 0 0.3rem;
       font-weight: 600;
     }
-    select, textarea, input[type="text"], input[type="email"], input[type="tel"] {
+    select {
       width: 100%;
       padding: 0.5rem;
       border-radius: 0.4rem;
       border: 1px solid #ccc;
       font-size: 1rem;
     }
-    textarea {
-      resize: vertical;
-      min-height: 80px;
-    }
     .btn {
-      margin-top: 2rem;
+      margin-top: 1rem;
       background-color: #1E3A8A;
       color: white;
       border: none;
       padding: 0.75rem 1.5rem;
-      font-size: 1.1rem;
+      font-size: 1rem;
       border-radius: 0.6rem;
       cursor: pointer;
-      width: 100%;
-      font-weight: 700;
+      font-weight: 600;
       transition: background-color 0.3s;
-      display: none;
     }
     .btn:hover {
       background-color: #324bc1;
@@ -94,7 +88,7 @@
 </header>
 
 <nav>
-  <a href="/">Inicio</a>
+  <a href="/inicio/">Inicio</a>
   <a href="/productos/">Productos</a>
   <a href="/nosotros/">Sobre Nosotros</a>
 </nav>
@@ -104,153 +98,105 @@
 
   <form id="cotizacionForm">
 
-    <div class="pregunta" id="pregunta0">
+    <!-- Pregunta 1: Profesional -->
+    <div id="pregunta1">
       <label for="profesional">¿Eres un profesional con licencia?</label>
-      <select id="profesional" name="profesional" required>
-        <option value="" disabled selected>Selecciona una opción</option>
+      <select id="profesional" required>
+        <option value="">Selecciona una opción</option>
         <option value="si">Sí</option>
         <option value="no">No</option>
       </select>
+      <button type="button" class="btn" id="continuar1">Continuar</button>
     </div>
 
-    <div class="pregunta hidden" id="pregunta1">
+    <!-- Pregunta 2: Tipo de plano -->
+    <div id="pregunta2" class="hidden">
       <label for="tipoPlano">Tipo de plano</label>
-      <select id="tipoPlano" name="tipoPlano" required>
-        <option value="" disabled selected>Selecciona tipo de plano</option>
-        <option value="croquisSencillo" data-price="400">Croquis sencillo</option>
-        <option value="croquisMedidas" data-price="430">Croquis con medidas</option>
-        <option value="croquisTecnico" data-price="500">Croquis con elementos técnicos</option>
-        <option value="croquisComplejo" data-price="600">Croquis complejo con detalles</option>
-        <option value="otro" data-price="0">Otro</option>
+      <select id="tipoPlano" required>
+        <option value="">Selecciona tipo de plano</option>
+        <option value="400">Croquis sencillo</option>
+        <option value="430">Croquis con medidas</option>
+        <option value="500">Croquis con elementos técnicos</option>
+        <option value="600">Croquis complejo con detalles</option>
+        <option value="otro">Otro</option>
       </select>
+      <button type="button" class="btn" id="continuar2">Continuar</button>
     </div>
 
-    <div class="pregunta hidden" id="pregunta2">
+    <!-- Pregunta 3: Cantidad de áreas -->
+    <div id="pregunta3" class="hidden">
       <label for="cantidadAreas">Cantidad de áreas a diseñar</label>
-      <select id="cantidadAreas" name="cantidadAreas" required>
-        <option value="" disabled selected>Selecciona cantidad de áreas</option>
-        <option value="1a2" data-price="0">1 a 2 áreas</option>
-        <option value="3a5" data-price="80">3 a 5 áreas</option>
-        <option value="6a10" data-price="200">6 a 10 áreas</option>
-        <option value="otro" data-price="0">Otro</option>
+      <select id="cantidadAreas" required>
+        <option value="">Selecciona cantidad de áreas</option>
+        <option value="0">1 a 2 áreas</option>
+        <option value="80">3 a 5 áreas</option>
+        <option value="200">6 a 10 áreas</option>
+        <option value="otro">Otro</option>
       </select>
+      <button type="button" class="btn" id="continuar3">Continuar</button>
     </div>
 
-    <div class="pregunta hidden" id="pregunta3">
-      <label for="entregaExpress">¿Entrega express?</label>
-      <select id="entregaExpress" name="entregaExpress" required>
-        <option value="" disabled selected>Selecciona opción</option>
-        <option value="no" data-price="0">No</option>
-        <option value="si" data-price="50">Sí</option>
+    <!-- Pregunta 4: Entrega express -->
+    <div id="pregunta4" class="hidden">
+      <label for="express">¿Entrega express?</label>
+      <select id="express" required>
+        <option value="">Selecciona una opción</option>
+        <option value="0">No</option>
+        <option value="50">Sí</option>
       </select>
+      <button type="submit" class="btn" id="obtenerBtn">Obtener cotización</button>
     </div>
 
-    <div id="cotizacionPersonalizada" class="hidden">
-      <h2>Cotización personalizada</h2>
-      <label for="nombre">Nombre completo *</label>
-      <input type="text" id="nombre" name="nombre" required />
-
-      <label for="telefono">Teléfono *</label>
-      <input type="tel" id="telefono" name="telefono" required />
-
-      <label for="correo">Correo electrónico *</label>
-      <input type="email" id="correo" name="correo" required />
-
-      <label for="nombreProyecto">Nombre del proyecto (opcional)</label>
-      <input type="text" id="nombreProyecto" name="nombreProyecto" />
-
-      <label for="descripcionSolicitud">Describe tu solicitud *</label>
-      <textarea id="descripcionSolicitud" name="descripcionSolicitud" required></textarea>
-
-      <label for="urgencia">¿Deseas respuesta urgente en menos de 24h? (+$20 AUD)</label>
-      <select id="urgencia" name="urgencia" required>
-        <option value="" disabled selected>Selecciona opción</option>
-        <option value="no" data-price="0">No</option>
-        <option value="si" data-price="20">Sí</option>
-      </select>
-    </div>
-
-    <button type="submit" class="btn" id="submitBtn">Obtener cotización</button>
   </form>
 </main>
 
 <script>
-  const profesional = document.getElementById('profesional');
-  const preguntas = [
-    document.getElementById('pregunta1'),
-    document.getElementById('pregunta2'),
-    document.getElementById('pregunta3'),
-  ];
-  const cotizacionPersonalizada = document.getElementById('cotizacionPersonalizada');
-  const submitBtn = document.getElementById('submitBtn');
-  const form = document.getElementById('cotizacionForm');
+  const pregunta2 = document.getElementById('pregunta2');
+  const pregunta3 = document.getElementById('pregunta3');
+  const pregunta4 = document.getElementById('pregunta4');
+  const continuar1 = document.getElementById('continuar1');
+  const continuar2 = document.getElementById('continuar2');
+  const continuar3 = document.getElementById('continuar3');
+  const obtenerBtn = document.getElementById('obtenerBtn');
 
-  function ocultarPreguntas() {
-    preguntas.forEach(p => p.classList.add('hidden'));
-    submitBtn.style.display = 'none';
-  }
-
-  profesional.addEventListener('change', () => {
-    if (profesional.value === 'si') {
-      cotizacionPersonalizada.classList.add('hidden');
-      ocultarPreguntas();
-      preguntas[0].classList.remove('hidden');
-    } else {
-      cotizacionPersonalizada.classList.remove('hidden');
-      ocultarPreguntas();
-      submitBtn.textContent = 'Solicitar revisión';
-      submitBtn.style.display = 'block';
+  continuar1.addEventListener('click', () => {
+    const profesional = document.getElementById('profesional').value;
+    if (profesional === "no") {
+      window.location.href = "/productos/cotizacion/personalizada/";
+    } else if (profesional === "si") {
+      pregunta2.classList.remove("hidden");
+      continuar1.style.display = "none";
     }
   });
 
-  function handleNextQuestion(currentIndex, selectElement) {
-    const selectedValue = selectElement.value;
-    if (selectedValue === 'otro') {
-      cotizacionPersonalizada.classList.remove('hidden');
-      ocultarPreguntas();
-      submitBtn.textContent = 'Solicitar revisión';
-      submitBtn.style.display = 'block';
-    } else {
-      cotizacionPersonalizada.classList.add('hidden');
-      submitBtn.textContent = 'Obtener cotización';
-      if (currentIndex + 1 < preguntas.length) {
-        preguntas[currentIndex + 1].classList.remove('hidden');
-      } else {
-        submitBtn.style.display = 'block';
-      }
+  continuar2.addEventListener('click', () => {
+    const tipo = document.getElementById('tipoPlano').value;
+    if (tipo === "otro") {
+      window.location.href = "/productos/cotizacion/personalizada/";
+    } else if (tipo !== "") {
+      pregunta3.classList.remove("hidden");
+      continuar2.style.display = "none";
     }
-  }
-
-  preguntas.forEach((preguntaDiv, idx) => {
-    const select = preguntaDiv.querySelector('select');
-    select.addEventListener('change', () => {
-      handleNextQuestion(idx, select);
-    });
   });
 
-  form.addEventListener('submit', (e) => {
+  continuar3.addEventListener('click', () => {
+    const areas = document.getElementById('cantidadAreas').value;
+    if (areas === "otro") {
+      window.location.href = "/productos/cotizacion/personalizada/";
+    } else if (areas !== "") {
+      pregunta4.classList.remove("hidden");
+      continuar3.style.display = "none";
+    }
+  });
+
+  document.getElementById("cotizacionForm").addEventListener("submit", function(e) {
     e.preventDefault();
+    const tipo = parseInt(document.getElementById("tipoPlano").value) || 0;
+    const areas = parseInt(document.getElementById("cantidadAreas").value) || 0;
+    const express = parseInt(document.getElementById("express").value) || 0;
+    const total = tipo + areas + express;
 
-    if (!cotizacionPersonalizada.classList.contains('hidden')) {
-      const urgencia = document.getElementById('urgencia');
-      const extra = Number(urgencia.options[urgencia.selectedIndex].dataset.price || 0);
-      const total = 20 + extra;
-      window.location.href = /productos/cotizacion/personalizada/resultado/?total=${total};
-      return;
-    }
-
-    let total = 0;
-    const tipoPlano = document.getElementById('tipoPlano');
-    const cantidadAreas = document.getElementById('cantidadAreas');
-    const entregaExpress = document.getElementById('entregaExpress');
-
-    total += Number(tipoPlano.options[tipoPlano.selectedIndex].dataset.price || 0);
-    total += Number(cantidadAreas.options[cantidadAreas.selectedIndex].dataset.price || 0);
-    total += Number(entregaExpress.options[entregaExpress.selectedIndex].dataset.price || 0);
-
-    if (total < 400) total = 400;
-
-    window.location.href = resultado/?total=${total};
+    window.location.href = `resultado/?total=${total}`;
   });
 </script>
 

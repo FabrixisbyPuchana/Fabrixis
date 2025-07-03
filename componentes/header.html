@@ -1,10 +1,51 @@
-<header style="background-color: #1E3A8A; color: white; padding: 2rem 1rem; text-align: center;">
-  <h1 style="margin: 0; font-size: 2rem;">Fabrixis by Puchana</h1>
-  <p style="margin: 0.5rem 0 0;">Precision that plays off</p>
-</header>
+<div class="fabrixis-header">
+  <style>
+    .site-header {
+      background-color: #1E3A8A;
+      color: white;
+      padding: 2rem 1rem;
+      text-align: center;
+    }
 
-<nav style="display: flex; justify-content: center; background-color: #E5E7EB; padding: 0.8rem; gap: 1.5rem;">
-  <a href="/" style="color: #1E3A8A; font-weight: 600; text-decoration: none;">Inicio</a>
-  <a href="/productos/" style="color: #1E3A8A; font-weight: 600; text-decoration: none;">Productos</a>
-  <a href="/nosotros/" style="color: #1E3A8A; font-weight: 600; text-decoration: none;">Sobre Nosotros</a>
-</nav>
+    .site-header h1 {
+      margin: 0;
+      font-size: 2rem;
+      font-weight: 700;
+    }
+
+    .site-header p {
+      margin: 0.5rem 0 0;
+      font-weight: 400;
+    }
+
+    .site-nav {
+      display: flex;
+      justify-content: center;
+      background-color: #E5E7EB;
+      padding: 0.8rem;
+      gap: 1.5rem;
+    }
+
+    .site-nav a {
+      color: #1E3A8A;
+      font-weight: 600;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .site-nav a:hover {
+      color: #324bc1;
+    }
+  </style>
+
+  <header class="site-header">
+    <h1>Fabrixis by Puchana</h1>
+    <p>Precision that plays off</p>
+  </header>
+
+  <nav class="site-nav">
+    <a href="/">Inicio</a>
+    <a href="/productos/">Productos</a>
+    <a href="/nosotros/">Sobre Nosotros</a>
+  </nav>
+</div>

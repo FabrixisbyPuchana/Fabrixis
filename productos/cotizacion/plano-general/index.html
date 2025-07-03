@@ -1,64 +1,97 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Cotización Plano General - Fabrixis</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet" />
+  <title>Productos | Fabrixis</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
   <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     body {
       font-family: 'Montserrat', sans-serif;
       background-color: #f4f7fa;
       color: #1E3A8A;
-      padding: 2rem;
+      line-height: 1.6;
     }
 
-    .container {
-      background: white;
-      max-width: 600px;
-      margin: auto;
-      padding: 2rem;
-      border-radius: 1rem;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    }
-
-    h1 {
-      text-align: center;
-      margin-bottom: 2rem;
-    }
-
-    label {
-      display: block;
-      margin-top: 1.5rem;
-      font-weight: 600;
-    }
-
-    select, button {
-      width: 100%;
-      padding: 0.75rem;
-      margin-top: 0.5rem;
-      border: 1px solid #ccc;
-      border-radius: 0.5rem;
-      font-family: 'Montserrat', sans-serif;
-    }
-
-    button {
+    header {
       background-color: #1E3A8A;
       color: white;
-      font-weight: bold;
-      margin-top: 2rem;
+      padding: 2rem 1rem;
+      text-align: center;
+    }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      background-color: #E5E7EB;
+      padding: 1rem;
+    }
+
+    nav a {
+      margin: 0 1rem;
+      text-decoration: none;
+      color: #1E3A8A;
+      font-weight: 600;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: #3B82F6;
+    }
+
+    main {
+      padding: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .product-card {
+      background-color: white;
+      border-radius: 1rem;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      padding: 2rem;
+      width: 300px;
+    }
+
+    .product-card h3 {
+      color: #1E3A8A;
+    }
+
+    .product-card button {
+      margin-top: 1rem;
+      background-color: #1E3A8A;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
       cursor: pointer;
     }
 
-    button:hover {
-      background-color: #324bc1;
-    }
-
-    .hidden {
-      display: none;
+    .product-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      justify-content: center;
     }
   </style>
 </head>
+<body>
+  <header>
+    <h1>Fabrixis by Puchana</h1>
+    <p>Precision that plays off</p>
+  </header>
+
+  <nav>
+    <a href="/">Inicio</a>
+   <a href="/productos/">Productos</a>
+  <a href="/nosotros/">Sobre nosotros</a>
+  </nav>
 <body>
   <div class="container">
     <h1>Cotización: Plano General</h1>

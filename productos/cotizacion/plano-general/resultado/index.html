@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resultado de Cotización - Fabrixis</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background-color: #f4f7fa;
+      color: #1E3A8A;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      text-align: center;
+      padding: 2rem;
+    }
+
+    .container {
+      background-color: white;
+      padding: 3rem;
+      border-radius: 1.5rem;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+
+    p.total {
+      font-size: 2rem;
+      font-weight: bold;
+      margin: 1rem 0 2rem;
+    }
+
+    .btn-group {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .btn {
+      background-color: #1E3A8A;
+      color: white;
+      padding: 0.8rem 1.8rem;
+      border: none;
+      border-radius: 0.75rem;
+      font-size: 1rem;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .btn:hover {
+      background-color: #3749b2;
+    }
+
+    @media(min-width: 500px) {
+      .btn-group {
+        flex-direction: row;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Resultado de Cotización</h1>
+    <p class="total" id="totalPrecio">Total estimado: $0 AUD</p>
+    <div class="btn-group">
+      <a href="#" class="btn">Realizar pago</a>
+      <a href="/productos/cotizacion/revision/" class="btn">Solicitar revisión personalizada</a>
+    </div>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const total = params.get("total");
+    document.getElementById("totalPrecio").textContent = `Total estimado: $${total} AUD`;
+  </script>
+</body>
+</html>

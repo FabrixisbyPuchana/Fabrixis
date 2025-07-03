@@ -45,6 +45,7 @@
       padding: 0.5rem 1rem;
       border-radius: 0.5rem;
       cursor: pointer;
+      transition: background-color 0.3s;
     }
 
     .product-card button:hover {
@@ -57,19 +58,11 @@
       gap: 2rem;
       justify-content: center;
     }
-
-    footer {
-      background-color: #1E3A8A;
-      color: white;
-      text-align: center;
-      padding: 1rem;
-      margin-top: 3rem;
-    }
   </style>
 </head>
 <body>
 
-  <!-- Encabezado dinámico reutilizable -->
+  <!-- Contenedor para header dinámico -->
   <div id="header-container"></div>
 
   <main>
@@ -113,17 +106,24 @@
     </div>
   </main>
 
-  <footer>
-    <p>&copy; 2025 Fabrixis. Todos los derechos reservados.</p>
-  </footer>
+  <!-- Contenedor para footer dinámico -->
+  <div id="footer-container"></div>
 
-  <!-- Script para cargar el header.html -->
   <script>
+    // Cargar header
     fetch("/componentes/header.html")
       .then(response => response.text())
       .then(data => {
         document.getElementById("header-container").innerHTML = data;
       });
+
+    // Cargar footer
+    fetch("/componentes/footer.html")
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById("footer-container").innerHTML = data;
+      });
   </script>
+
 </body>
 </html>

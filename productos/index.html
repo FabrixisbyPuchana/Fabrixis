@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -17,32 +17,6 @@
       background-color: #f4f7fa;
       color: #1E3A8A;
       line-height: 1.6;
-    }
-
-    header {
-      background-color: #1E3A8A;
-      color: white;
-      padding: 2rem 1rem;
-      text-align: center;
-    }
-
-    nav {
-      display: flex;
-      justify-content: center;
-      background-color: #E5E7EB;
-      padding: 1rem;
-    }
-
-    nav a {
-      margin: 0 1rem;
-      text-decoration: none;
-      color: #1E3A8A;
-      font-weight: 600;
-      transition: color 0.3s;
-    }
-
-    nav a:hover {
-      color: #3B82F6;
     }
 
     main {
@@ -73,25 +47,30 @@
       cursor: pointer;
     }
 
+    .product-card button:hover {
+      background-color: #324bc1;
+    }
+
     .product-grid {
       display: flex;
       flex-wrap: wrap;
       gap: 2rem;
       justify-content: center;
     }
+
+    footer {
+      background-color: #1E3A8A;
+      color: white;
+      text-align: center;
+      padding: 1rem;
+      margin-top: 3rem;
+    }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Fabrixis by Puchana</h1>
-    <p>Precision that plays off</p>
-  </header>
 
-  <nav>
-    <a href="/">Inicio</a>
-   <a href="/productos/">Productos</a>
-  <a href="/nosotros/">Sobre nosotros</a>
-  </nav>
+  <!-- Encabezado dinámico reutilizable -->
+  <div id="header-container"></div>
 
   <main>
     <h2 style="text-align: center; margin-bottom: 2rem;">Nuestros Productos</h2>
@@ -137,5 +116,14 @@
   <footer>
     <p>&copy; 2025 Fabrixis. Todos los derechos reservados.</p>
   </footer>
+
+  <!-- Script para cargar el header.html -->
+  <script>
+    fetch("/componentes/header.html")
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById("header-container").innerHTML = data;
+      });
+  </script>
 </body>
 </html>

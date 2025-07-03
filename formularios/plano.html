@@ -1,0 +1,73 @@
+<form id="form-plano" style="background: white; padding: 2rem; border-radius: 1rem; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+  <!-- Pregunta 0: Validación profesional -->
+  <div style="margin-bottom: 1.5rem;">
+    <label><strong>¿Eres un profesional con licencia?</strong></label><br>
+    <select onchange="manejarLicencia(this.value)" style="margin-top: 0.5rem; padding: 0.5rem; border-radius: 0.5rem;">
+      <option value="">-- Selecciona --</option>
+      <option value="si">SÍ</option>
+      <option value="no">NO</option>
+    </select>
+  </div>
+
+  <div id="formulario-plano-dinamico" style="display:none;">
+    <!-- Pregunta 1: Tipo de plano -->
+    <div style="margin-bottom: 1.5rem;">
+      <label><strong>¿Qué tipo de plano tienes?</strong></label><br>
+      <select onchange="sumarValor(this, 0)" required>
+        <option value="">-- Selecciona --</option>
+        <option value="400">Croquis sencillo</option>
+        <option value="430">Croquis con medidas</option>
+        <option value="500">Croquis con elementos técnicos</option>
+        <option value="600">Croquis complejo</option>
+        <option value="otro">Otro</option>
+      </select>
+    </div>
+
+    <!-- Pregunta 2: Áreas a diseñar -->
+    <div style="margin-bottom: 1.5rem;">
+      <label><strong>¿Cuántas áreas quieres diseñar?</strong></label><br>
+      <select onchange="sumarValor(this, 1)" required>
+        <option value="">-- Selecciona --</option>
+        <option value="0">1 a 2 áreas</option>
+        <option value="80">3 a 5 áreas</option>
+        <option value="200">6 a 10 áreas</option>
+        <option value="otro">Otro</option>
+      </select>
+    </div>
+
+    <!-- Pregunta 3: Entrega express -->
+    <div style="margin-bottom: 1.5rem;">
+      <label><strong>¿Necesitas entrega express?</strong></label><br>
+      <select onchange="sumarValor(this, 2)" required>
+        <option value="">-- Selecciona --</option>
+        <option value="0">No</option>
+        <option value="50">Sí</option>
+      </select>
+    </div>
+  </div>
+</form>
+
+<!-- Si selecciona "otro" en cualquier parte o NO es profesional, aparece cotización personalizada -->
+<script>
+  const precios = [0, 0, 0];
+
+  function manejarLicencia(valor) {
+    const form = document.getElementById('formulario-plano-dinamico');
+    if (valor === 'si') {
+      form.style.display = 'block';
+    } else if (valor === 'no') {
+      form.style.display = 'none';
+      window.location.href = '#cotizacion-personalizada';
+    } else {
+      form.style.display = 'none';
+    }
+  }
+
+  function sumarValor(select, index) {
+    if (select.value === 'otro') {
+      window.location.href = '#cotizacion-personalizada';
+      return;
+    }
+    precios[index] = parseInt(select.value);
+  }
+</script>

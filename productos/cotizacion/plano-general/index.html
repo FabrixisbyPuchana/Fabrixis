@@ -13,46 +13,27 @@
       margin: 0;
       padding: 0;
     }
-    header {
-      background-color: #1E3A8A;
-      color: white;
-      padding: 1rem;
-      text-align: center;
-    }
-    nav {
-      display: flex;
-      justify-content: center;
-      background-color: #E5E7EB;
-      padding: 0.8rem;
-      gap: 1.5rem;
-      margin-bottom: 1rem;
-    }
-    nav a {
-      color: #1E3A8A;
-      font-weight: 600;
-      text-decoration: none;
-      transition: color 0.3s;
-    }
-    nav a:hover {
-      color: #324bc1;
-    }
+
     main {
       max-width: 600px;
-      margin: 0 auto;
+      margin: 2rem auto;
       background-color: white;
       padding: 2rem;
       border-radius: 1rem;
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     }
+
     h1 {
       text-align: center;
       margin-bottom: 1.5rem;
     }
+
     label {
       display: block;
       margin: 1rem 0 0.3rem;
       font-weight: 600;
     }
+
     select {
       width: 100%;
       padding: 0.5rem;
@@ -60,6 +41,7 @@
       border: 1px solid #ccc;
       font-size: 1rem;
     }
+
     .btn {
       margin-top: 1rem;
       background-color: #1E3A8A;
@@ -72,9 +54,11 @@
       font-weight: 600;
       transition: background-color 0.3s;
     }
+
     .btn:hover {
       background-color: #324bc1;
     }
+
     .hidden {
       display: none;
     }
@@ -82,124 +66,116 @@
 </head>
 <body>
 
-  <header style="background-color: #1E3A8A; color: white; padding: 2rem 1rem; text-align: center; position: relative; z-index: 10;">
-  <h1 style="margin: 0; font-size: 2rem; font-weight: 700;">Fabrixis by Puchana</h1>
-  <p style="margin-top: 0.5rem; font-weight: 400;">Precision that plays off</p>
+  <!-- Header reutilizable -->
+  <div id="header-container"></div>
 
-</header>
+  <main>
+    <h1>Cotización: Plano General</h1>
 
-<nav>
-  <a href="/">Inicio</a>
-  <a href="/productos/">Productos</a>
-  <a href="/nosotros/">Sobre Nosotros</a>
-</nav>
+    <form id="cotizacionForm">
+      <!-- Pregunta 1 -->
+      <div id="pregunta1">
+        <label for="profesional">¿Eres un profesional con licencia?</label>
+        <select id="profesional" required>
+          <option value="">Selecciona una opción</option>
+          <option value="si">Sí</option>
+          <option value="no">No</option>
+        </select>
+        <button type="button" class="btn" id="continuar1">Continuar</button>
+      </div>
 
-<main>
-  <h1>Cotización: Plano General</h1>
+      <!-- Pregunta 2 -->
+      <div id="pregunta2" class="hidden">
+        <label for="tipoPlano">Tipo de plano</label>
+        <select id="tipoPlano" required>
+          <option value="">Selecciona tipo de plano</option>
+          <option value="400">Croquis sencillo</option>
+          <option value="430">Croquis con medidas</option>
+          <option value="500">Croquis con elementos técnicos</option>
+          <option value="600">Croquis complejo con detalles</option>
+          <option value="otro">Otro</option>
+        </select>
+        <button type="button" class="btn" id="continuar2">Continuar</button>
+      </div>
 
-  <form id="cotizacionForm">
+      <!-- Pregunta 3 -->
+      <div id="pregunta3" class="hidden">
+        <label for="cantidadAreas">Cantidad de áreas a diseñar</label>
+        <select id="cantidadAreas" required>
+          <option value="">Selecciona cantidad de áreas</option>
+          <option value="0">1 a 2 áreas</option>
+          <option value="80">3 a 5 áreas</option>
+          <option value="200">6 a 10 áreas</option>
+          <option value="otro">Otro</option>
+        </select>
+        <button type="button" class="btn" id="continuar3">Continuar</button>
+      </div>
 
-    <!-- Pregunta 1: Profesional -->
-    <div id="pregunta1">
-      <label for="profesional">¿Eres un profesional con licencia?</label>
-      <select id="profesional" required>
-        <option value="">Selecciona una opción</option>
-        <option value="si">Sí</option>
-        <option value="no">No</option>
-      </select>
-      <button type="button" class="btn" id="continuar1">Continuar</button>
-    </div>
+      <!-- Pregunta 4 -->
+      <div id="pregunta4" class="hidden">
+        <label for="express">¿Entrega express?</label>
+        <select id="express" required>
+          <option value="">Selecciona una opción</option>
+          <option value="0">No</option>
+          <option value="50">Sí</option>
+        </select>
+        <button type="submit" class="btn" id="obtenerBtn">Obtener cotización</button>
+      </div>
+    </form>
+  </main>
 
-    <!-- Pregunta 2: Tipo de plano -->
-    <div id="pregunta2" class="hidden">
-      <label for="tipoPlano">Tipo de plano</label>
-      <select id="tipoPlano" required>
-        <option value="">Selecciona tipo de plano</option>
-        <option value="400">Croquis sencillo</option>
-        <option value="430">Croquis con medidas</option>
-        <option value="500">Croquis con elementos técnicos</option>
-        <option value="600">Croquis complejo con detalles</option>
-        <option value="otro">Otro</option>
-      </select>
-      <button type="button" class="btn" id="continuar2">Continuar</button>
-    </div>
+  <script>
+    // Cargar header.html
+    fetch("/componentes/header.html")
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById("header-container").innerHTML = html;
+      });
 
-    <!-- Pregunta 3: Cantidad de áreas -->
-    <div id="pregunta3" class="hidden">
-      <label for="cantidadAreas">Cantidad de áreas a diseñar</label>
-      <select id="cantidadAreas" required>
-        <option value="">Selecciona cantidad de áreas</option>
-        <option value="0">1 a 2 áreas</option>
-        <option value="80">3 a 5 áreas</option>
-        <option value="200">6 a 10 áreas</option>
-        <option value="otro">Otro</option>
-      </select>
-      <button type="button" class="btn" id="continuar3">Continuar</button>
-    </div>
+    // Lógica de preguntas
+    const pregunta2 = document.getElementById('pregunta2');
+    const pregunta3 = document.getElementById('pregunta3');
+    const pregunta4 = document.getElementById('pregunta4');
 
-    <!-- Pregunta 4: Entrega express -->
-    <div id="pregunta4" class="hidden">
-      <label for="express">¿Entrega express?</label>
-      <select id="express" required>
-        <option value="">Selecciona una opción</option>
-        <option value="0">No</option>
-        <option value="50">Sí</option>
-      </select>
-      <button type="submit" class="btn" id="obtenerBtn">Obtener cotización</button>
-    </div>
+    document.getElementById('continuar1').addEventListener('click', () => {
+      const profesional = document.getElementById('profesional').value;
+      if (profesional === "no") {
+        window.location.href = "/productos/cotizacion/personalizado/";
+      } else if (profesional === "si") {
+        pregunta2.classList.remove("hidden");
+        document.getElementById('continuar1').style.display = "none";
+      }
+    });
 
-  </form>
-</main>
+    document.getElementById('continuar2').addEventListener('click', () => {
+      const tipo = document.getElementById('tipoPlano').value;
+      if (tipo === "otro") {
+        window.location.href = "/productos/cotizacion/personalizado/";
+      } else if (tipo !== "") {
+        pregunta3.classList.remove("hidden");
+        document.getElementById('continuar2').style.display = "none";
+      }
+    });
 
-<script>
-  const pregunta2 = document.getElementById('pregunta2');
-  const pregunta3 = document.getElementById('pregunta3');
-  const pregunta4 = document.getElementById('pregunta4');
-  const continuar1 = document.getElementById('continuar1');
-  const continuar2 = document.getElementById('continuar2');
-  const continuar3 = document.getElementById('continuar3');
-  const obtenerBtn = document.getElementById('obtenerBtn');
+    document.getElementById('continuar3').addEventListener('click', () => {
+      const areas = document.getElementById('cantidadAreas').value;
+      if (areas === "otro") {
+        window.location.href = "/productos/cotizacion/personalizado/";
+      } else if (areas !== "") {
+        pregunta4.classList.remove("hidden");
+        document.getElementById('continuar3').style.display = "none";
+      }
+    });
 
-  continuar1.addEventListener('click', () => {
-    const profesional = document.getElementById('profesional').value;
-    if (profesional === "no") {
-      window.location.href = "/productos/cotizacion/personalizado/";
-    } else if (profesional === "si") {
-      pregunta2.classList.remove("hidden");
-      continuar1.style.display = "none";
-    }
-  });
+    document.getElementById("cotizacionForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const tipo = parseInt(document.getElementById("tipoPlano").value) || 0;
+      const areas = parseInt(document.getElementById("cantidadAreas").value) || 0;
+      const express = parseInt(document.getElementById("express").value) || 0;
+      const total = tipo + areas + express;
 
-  continuar2.addEventListener('click', () => {
-    const tipo = document.getElementById('tipoPlano').value;
-    if (tipo === "otro") {
-      window.location.href = "/productos/cotizacion/personalizado/";
-    } else if (tipo !== "") {
-      pregunta3.classList.remove("hidden");
-      continuar2.style.display = "none";
-    }
-  });
-
-  continuar3.addEventListener('click', () => {
-    const areas = document.getElementById('cantidadAreas').value;
-    if (areas === "otro") {
-      window.location.href = "/productos/cotizacion/personalizado/";
-    } else if (areas !== "") {
-      pregunta4.classList.remove("hidden");
-      continuar3.style.display = "none";
-    }
-  });
-
-  document.getElementById("cotizacionForm").addEventListener("submit", function(e) {
-    e.preventDefault();
-    const tipo = parseInt(document.getElementById("tipoPlano").value) || 0;
-    const areas = parseInt(document.getElementById("cantidadAreas").value) || 0;
-    const express = parseInt(document.getElementById("express").value) || 0;
-    const total = tipo + areas + express;
-
-    window.location.href = `resultado/?total=${total}`;
-  });
-</script>
-
+      window.location.href = `resultado/?total=${total}`;
+    });
+  </script>
 </body>
 </html>

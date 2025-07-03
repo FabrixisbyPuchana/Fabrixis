@@ -132,7 +132,6 @@
         `;
       });
 
-    // Variables
     const tipoCorreccion = document.getElementById('tipoCorreccion');
     const cantidadPlanos = document.getElementById('cantidadPlanos');
     const express = document.getElementById('express');
@@ -150,7 +149,6 @@
       boton.style.display = 'none';
     }
 
-    // Pregunta 1
     btn1.addEventListener('click', () => {
       if (!tipoCorreccion.value) return alert('Selecciona una opción.');
       if (tipoCorreccion.value === 'otro') {
@@ -161,7 +159,6 @@
       pregunta2.classList.remove('hidden');
     });
 
-    // Pregunta 2
     btn2.addEventListener('click', () => {
       if (!cantidadPlanos.value) return alert('Selecciona una opción.');
       if (cantidadPlanos.value === 'otro') {
@@ -172,16 +169,23 @@
       pregunta3.classList.remove('hidden');
     });
 
-    // Pregunta 3
     btn3.addEventListener('click', () => {
       if (!express.value) return alert('Selecciona una opción.');
       bloquearPregunta(express, btn3);
 
       const total = Number(tipoCorreccion.value) + Number(cantidadPlanos.value) + Number(express.value);
 
-      sessionStorage.setItem('totalCotizacion', total);
-      sessionStorage.setItem('tipoCotizacion', 'producto');
-      sessionStorage.setItem('producto', 'Revisión de Planos');
+      // Limpiar cotizaciones previas
+      sessionStorage.removeItem('cotizacionPlanoGeneral');
+      sessionStorage.removeItem('cotizacionTranscripcion');
+      sessionStorage.removeItem('cotizacionPersonalizada');
+
+      // Guardar con la clave correcta
+      const cotizacion = {
+        tipoCotizacion: 'revision',
+        total: total
+      };
+      sessionStorage.setItem('cotizacionRevision', JSON.stringify(cotizacion));
 
       window.location.href = '/productos/cotizacion/resultado/';
     });

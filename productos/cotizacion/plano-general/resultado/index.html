@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Fabrixis by Puchana</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Resultado Cotización - Fabrixis</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet" />
   <style>
     body {
       font-family: 'Montserrat', sans-serif;
@@ -12,6 +12,9 @@
       color: #1E3A8A;
       margin: 0;
       padding: 0;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
     }
     header {
       background-color: #1E3A8A;
@@ -36,40 +39,55 @@
       color: #324bc1;
     }
     main {
+      flex-grow: 1;
       max-width: 600px;
       margin: 2rem auto;
       background-color: white;
       padding: 2rem;
       border-radius: 1rem;
-      text-align: center;
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      text-align: center;
     }
     h1 {
-      font-size: 1.8rem;
-      margin-bottom: 1rem;
+      margin-bottom: 2rem;
+      font-weight: 700;
+      font-size: 2.5rem;
+      color: #1E3A8A;
     }
-    .precio {
+    p.total {
       font-size: 3rem;
-      font-weight: bold;
-      color: #16A34A;
-      margin: 2rem 0;
+      font-weight: 800;
+      margin-bottom: 3rem;
+      color: #324bc1;
     }
     .btn {
-      display: inline-block;
-      margin: 0.5rem;
-      padding: 0.75rem 1.5rem;
-      font-size: 1rem;
       background-color: #1E3A8A;
       color: white;
       border: none;
-      border-radius: 0.5rem;
+      padding: 1rem 2rem;
+      font-size: 1.25rem;
+      border-radius: 0.6rem;
       cursor: pointer;
-      text-decoration: none;
-      font-weight: 600;
+      font-weight: 700;
+      margin: 0 1rem;
+      min-width: 140px;
       transition: background-color 0.3s;
     }
     .btn:hover {
       background-color: #324bc1;
+    }
+    .btn-secondary {
+      background-color: #e5e7eb;
+      color: #1E3A8A;
+    }
+    .btn-secondary:hover {
+      background-color: #cbd5e1;
+    }
+    .btn-container {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
     }
   </style>
 </head>
@@ -87,24 +105,34 @@
 </nav>
 
 <main>
-  <h1>Estimación de tu cotización</h1>
-  <div class="precio" id="precioTotal">$0 AUD</div>
+  <h1>Precio Total</h1>
+  <p class="total" id="precioTotal">$0 AUD</p>
 
-  <a class="btn" href="#">Realizar pago</a>
-  <a class="btn" href="/productos/cotizacion/personalizado/">Solicitar revisión personalizada</a>
+  <div class="btn-container">
+    <button id="pagarBtn" class="btn">Pagar</button>
+    <button id="volverBtn" class="btn btn-secondary">Volver a Productos</button>
+  </div>
 </main>
 
 <script>
-  // Obtener el valor de la URL
+  // Obtener el total de la URL (query string)
   const params = new URLSearchParams(window.location.search);
-  const total = params.get('total');
+  const total = params.get('total') || '0';
 
-  // Mostrar el valor si es válido
-  if (total) {
-    document.getElementById('precioTotal').textContent = `$${parseInt(total)} AUD`;
-  } else {
-    document.getElementById('precioTotal').textContent = 'No se pudo calcular el precio';
-  }
+  // Mostrar total formateado
+  const precioTotalEl = document.getElementById('precioTotal');
+  precioTotalEl.textContent = `$${total} AUD`;
+
+  // Botón volver a productos
+  document.getElementById('volverBtn').addEventListener('click', () => {
+    window.location.href = '/productos/';
+  });
+
+  // Botón pagar (pendiente integración)
+  document.getElementById('pagarBtn').addEventListener('click', () => {
+    alert('Funcionalidad de pago pendiente de integrar.');
+    // Aquí podrás añadir la lógica para el pago (Apple Pay, Stripe, etc.)
+  });
 </script>
 
 </body>

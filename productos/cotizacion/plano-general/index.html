@@ -1,111 +1,245 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Productos | Fabrixis</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cotización Plano General - Fabrixis</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet" />
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
     body {
       font-family: 'Montserrat', sans-serif;
       background-color: #f4f7fa;
       color: #1E3A8A;
-      line-height: 1.6;
+      margin: 0;
+      padding: 0;
     }
-
     header {
       background-color: #1E3A8A;
       color: white;
-      padding: 2rem 1rem;
+      padding: 1rem;
       text-align: center;
     }
-
     nav {
       display: flex;
       justify-content: center;
       background-color: #E5E7EB;
-      padding: 1rem;
+      padding: 0.8rem;
+      gap: 1.5rem;
+      margin-bottom: 1rem;
     }
-
     nav a {
-      margin: 0 1rem;
-      text-decoration: none;
       color: #1E3A8A;
       font-weight: 600;
+      text-decoration: none;
       transition: color 0.3s;
     }
-
     nav a:hover {
-      color: #3B82F6;
+      color: #324bc1;
     }
 
     main {
-      padding: 2rem;
-      max-width: 1200px;
+      max-width: 600px;
       margin: 0 auto;
-    }
-
-    .product-card {
       background-color: white;
-      border-radius: 1rem;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
       padding: 2rem;
-      width: 300px;
+      border-radius: 1rem;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     }
-
-    .product-card h3 {
-      color: #1E3A8A;
+    h1 {
+      text-align: center;
+      margin-bottom: 1.5rem;
     }
-
-    .product-card button {
-      margin-top: 1rem;
+    label {
+      display: block;
+      margin: 1rem 0 0.3rem;
+      font-weight: 600;
+    }
+    select, textarea, input[type="text"], input[type="email"], input[type="tel"] {
+      width: 100%;
+      padding: 0.5rem;
+      border-radius: 0.4rem;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+    }
+    textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+    .btn {
+      margin-top: 2rem;
       background-color: #1E3A8A;
       color: white;
       border: none;
-      padding: 0.5rem 1rem;
-      border-radius: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      font-size: 1.1rem;
+      border-radius: 0.6rem;
       cursor: pointer;
+      width: 100%;
+      font-weight: 700;
+      transition: background-color 0.3s;
+    }
+    .btn:hover {
+      background-color: #324bc1;
     }
 
-    .product-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 2rem;
-      justify-content: center;
+    .hidden {
+      display: none;
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Fabrixis by Puchana</h1>
-    <p>Precision that plays off</p>
-  </header>
 
-  <nav>
-    <a href="/">Inicio</a>
-   <a href="/productos/">Productos</a>
-  <a href="/nosotros/">Sobre nosotros</a>
-  </nav>
-<body>
-  <div class="container">
-    <h1>Cotización: Plano General</h1>
+<header>
+  <h1>Fabrixis by Puchana</h1>
+  <p>Precision that plays off</p>
+</header>
 
-    <form id="formulario">
-      <label for="licencia">¿Eres un profesional con licencia?</label>
-      <select id="licencia" required>
-        <option value="">Selecciona una opción</option>
-        <option value="si">Sí</option>
-        <option value="no">No</option>
+<nav>
+  <a href="/inicio/">Inicio</a>
+  <a href="/productos/">Productos</a>
+  <a href="/nosotros/">Sobre Nosotros</a>
+</nav>
+
+<main>
+  <h1>Cotización: Plano General</h1>
+
+  <form id="cotizacionForm">
+    <!-- Pregunta 0: Profesional -->
+    <label for="profesional">¿Eres un profesional con licencia?</label>
+    <select id="profesional" name="profesional" required>
+      <option value="" disabled selected>Selecciona una opción</option>
+      <option value="si">Sí</option>
+      <option value="no">No</option>
+    </select>
+
+    <!-- Preguntas que aparecen solo si es profesional -->
+    <div id="preguntasProfesional" class="hidden">
+
+      <label for="tipoPlano">Tipo de plano</label>
+      <select id="tipoPlano" name="tipoPlano" required>
+        <option value="" disabled selected>Selecciona tipo de plano</option>
+        <option value="croquisSencillo" data-price="400">Croquis sencillo</option>
+        <option value="croquisMedidas" data-price="430">Croquis con medidas</option>
+        <option value="croquisTecnico" data-price="500">Croquis con elementos técnicos</option>
+        <option value="croquisComplejo" data-price="600">Croquis complejo con detalles</option>
+        <option value="otro" data-price="0">Otro</option>
       </select>
 
-      <div id="preguntas" class="hidden">
-        <label for="tipoPlano">Tipo de plano</label>
-        <select id="tipoPlano">
-          <option value="400">Croquis sencillo (Desde $400 AUD)</option>
-          <option value="430">Croqu
+      <label for="cantidadAreas">Cantidad de áreas a diseñar</label>
+      <select id="cantidadAreas" name="cantidadAreas" required>
+        <option value="" disabled selected>Selecciona cantidad de áreas</option>
+        <option value="1a2" data-price="0">1 a 2 áreas</option>
+        <option value="3a5" data-price="80">3 a 5 áreas</option>
+        <option value="6a10" data-price="200">6 a 10 áreas</option>
+        <option value="otro" data-price="0">Otro</option>
+      </select>
+
+      <label for="entregaExpress">¿Entrega express?</label>
+      <select id="entregaExpress" name="entregaExpress" required>
+        <option value="" disabled selected>Selecciona opción</option>
+        <option value="no" data-price="0">No</option>
+        <option value="si" data-price="50">Sí</option>
+      </select>
+
+    </div>
+
+    <!-- Cotización personalizada (se muestra si elige "Otro" en alguna pregunta o si NO es profesional) -->
+    <div id="cotizacionPersonalizada" class="hidden">
+      <h2>Cotización personalizada</h2>
+
+      <label for="nombre">Nombre completo *</label>
+      <input type="text" id="nombre" name="nombre" required />
+
+      <label for="telefono">Teléfono *</label>
+      <input type="tel" id="telefono" name="telefono" required />
+
+      <label for="correo">Correo electrónico *</label>
+      <input type="email" id="correo" name="correo" required />
+
+      <label for="nombreProyecto">Nombre del proyecto (opcional)</label>
+      <input type="text" id="nombreProyecto" name="nombreProyecto" />
+
+      <label for="descripcionSolicitud">Describe tu solicitud *</label>
+      <textarea id="descripcionSolicitud" name="descripcionSolicitud" required></textarea>
+
+      <label for="archivos">Sube archivos (máximo 3, PDF/JPG/PNG)</label>
+      <input type="file" id="archivos" name="archivos" accept=".pdf,.jpg,.jpeg,.png" multiple />
+
+      <label for="urgencia">¿Deseas respuesta urgente en menos de 24h? (+$20 AUD)</label>
+      <select id="urgencia" name="urgencia" required>
+        <option value="" disabled selected>Selecciona opción</option>
+        <option value="no" data-price="0">No</option>
+        <option value="si" data-price="20">Sí</option>
+      </select>
+    </div>
+
+    <button type="submit" class="btn">Enviar cotización</button>
+  </form>
+</main>
+
+<script>
+  const profesionalSelect = document.getElementById('profesional');
+  const preguntasDiv = document.getElementById('preguntasProfesional');
+  const personalizadaDiv = document.getElementById('cotizacionPersonalizada');
+  const form = document.getElementById('cotizacionForm');
+
+  function showPersonalizada() {
+    preguntasDiv.classList.add('hidden');
+    personalizadaDiv.classList.remove('hidden');
+  }
+
+  function showPreguntas() {
+    personalizadaDiv.classList.add('hidden');
+    preguntasDiv.classList.remove('hidden');
+  }
+
+  profesionalSelect.addEventListener('change', () => {
+    if (profesionalSelect.value === 'si') {
+      showPreguntas();
+    } else {
+      showPersonalizada();
+    }
+  });
+
+  // Mostrar cotización personalizada si alguna opción "otro" es seleccionada
+  const selects = document.querySelectorAll('#preguntasProfesional select');
+  selects.forEach(select => {
+    select.addEventListener('change', (e) => {
+      if (e.target.value === 'otro') {
+        showPersonalizada();
+      }
+    });
+  });
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    // Si cotización personalizada está visible, solo simula enviar (aquí integrarías Formspree o EmailJS)
+    if (!personalizadaDiv.classList.contains('hidden')) {
+      alert('Tu solicitud de cotización personalizada fue enviada. Te responderemos en menos de 48 horas.');
+      form.reset();
+      showPreguntas(); // Regresa a formulario normal
+      return;
+    }
+
+    // Si estamos en cotización normal, calcular precio y enviar a resultado
+    let total = 0;
+
+    const tipoPlano = document.getElementById('tipoPlano');
+    const cantidadAreas = document.getElementById('cantidadAreas');
+    const entregaExpress = document.getElementById('entregaExpress');
+
+    total += Number(tipoPlano.options[tipoPlano.selectedIndex].dataset.price || 0);
+    total += Number(cantidadAreas.options[cantidadAreas.selectedIndex].dataset.price || 0);
+    total += Number(entregaExpress.options[entregaExpress.selectedIndex].dataset.price || 0);
+
+    // Asegurar mínimo $400
+    if (total < 400) total = 400;
+
+    // Redirigir al resultado con total en query string
+    window.location.href = `resultado/?total=${total}`;
+  });
+</script>
+
+</body>
+</html>

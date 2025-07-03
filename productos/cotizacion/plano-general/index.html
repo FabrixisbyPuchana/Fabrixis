@@ -200,9 +200,17 @@
 
       const total = Number(tipoPlano.value) + Number(cantidadAreas.value) + Number(express.value);
 
-      sessionStorage.setItem('totalCotizacion', total);
-      sessionStorage.setItem('tipoCotizacion', 'producto');
-      sessionStorage.setItem('producto', 'Plano General');
+      // Limpieza de cotizaciones anteriores
+      sessionStorage.removeItem('cotizacionTranscripcion');
+      sessionStorage.removeItem('cotizacionRevision');
+      sessionStorage.removeItem('cotizacionPersonalizada');
+
+      // Guardar correctamente bajo la clave esperada
+      const cotizacion = {
+        tipoCotizacion: 'planoGeneral',
+        total: total
+      };
+      sessionStorage.setItem('cotizacionPlanoGeneral', JSON.stringify(cotizacion));
 
       window.location.href = '/productos/cotizacion/resultado/';
     });

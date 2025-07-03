@@ -13,9 +13,7 @@
       margin: 0;
       padding: 0;
     }
-    header, nav, footer {
-      /* Estos se cargan dinámicamente */
-    }
+
     main {
       max-width: 600px;
       margin: 2rem auto;
@@ -24,15 +22,18 @@
       border-radius: 1rem;
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     }
+
     h1 {
       text-align: center;
       margin-bottom: 1.5rem;
     }
+
     label {
       display: block;
       margin: 1rem 0 0.3rem;
       font-weight: 600;
     }
+
     select {
       width: 100%;
       padding: 0.5rem;
@@ -42,10 +43,12 @@
       cursor: not-allowed;
       background-color: #e9ecef;
     }
+
     select.enabled {
       cursor: pointer;
       background-color: white;
     }
+
     button {
       margin-top: 1rem;
       background-color: #1E3A8A;
@@ -57,9 +60,11 @@
       font-weight: 600;
       transition: background-color 0.3s;
     }
+
     button:hover {
       background-color: #324bc1;
     }
+
     .hidden {
       display: none;
     }
@@ -121,7 +126,6 @@
       </select>
       <button id="btn3">Obtener cotización</button>
     </div>
-
   </main>
 
   <!-- Footer dinámico -->
@@ -140,93 +144,66 @@
         `;
       });
 
-    // Variables DOM
-    const pregunta0 = document.getElementById('pregunta0');
-    const pregunta1 = document.getElementById('pregunta1');
-    const pregunta2 = document.getElementById('pregunta2');
-    const pregunta3 = document.getElementById('pregunta3');
+    const profesional = document.getElementById('profesional');
+    const tipoPlano = document.getElementById('tipoPlano');
+    const cantidadAreas = document.getElementById('cantidadAreas');
+    const express = document.getElementById('express');
 
     const btn0 = document.getElementById('btn0');
     const btn1 = document.getElementById('btn1');
     const btn2 = document.getElementById('btn2');
     const btn3 = document.getElementById('btn3');
 
-    const profesional = document.getElementById('profesional');
-    const tipoPlano = document.getElementById('tipoPlano');
-    const cantidadAreas = document.getElementById('cantidadAreas');
-    const express = document.getElementById('express');
+    const pregunta1 = document.getElementById('pregunta1');
+    const pregunta2 = document.getElementById('pregunta2');
+    const pregunta3 = document.getElementById('pregunta3');
 
-    // Función para bloquear select y ocultar botón
-    function confirmarPregunta(selectElement, btnElement) {
-      selectElement.disabled = true;
-      selectElement.classList.remove('enabled');
-      btnElement.style.display = 'none';
+    function bloquearPregunta(select, boton) {
+      select.disabled = true;
+      select.classList.remove('enabled');
+      boton.style.display = 'none';
     }
 
-    // Pregunta 0 - Profesional
     btn0.addEventListener('click', () => {
-      if (!profesional.value) {
-        alert('Por favor, selecciona una opción.');
+      if (!profesional.value) return alert('Selecciona una opción.');
+      if (profesional.value === 'no') {
+        window.location.href = '/productos/cotizacion/personalizado/';
         return;
       }
-      if (profesional.value === "no") {
-        window.location.href = "/productos/cotizacion/personalizado/";
-        return;
-      }
-      confirmarPregunta(profesional, btn0);
+      bloquearPregunta(profesional, btn0);
       pregunta1.classList.remove('hidden');
     });
 
-    // Pregunta 1 - Tipo de plano
     btn1.addEventListener('click', () => {
-      if (!tipoPlano.value) {
-        alert('Por favor, selecciona un tipo de plano.');
+      if (!tipoPlano.value) return alert('Selecciona una opción.');
+      if (tipoPlano.value === 'otro') {
+        window.location.href = '/productos/cotizacion/personalizado/';
         return;
       }
-      if (tipoPlano.value === "otro") {
-        window.location.href = "/productos/cotizacion/personalizado/";
-        return;
-      }
-      confirmarPregunta(tipoPlano, btn1);
+      bloquearPregunta(tipoPlano, btn1);
       pregunta2.classList.remove('hidden');
     });
 
-    // Pregunta 2 - Cantidad de áreas
     btn2.addEventListener('click', () => {
-      if (!cantidadAreas.value) {
-        alert('Por favor, selecciona una cantidad de áreas.');
+      if (!cantidadAreas.value) return alert('Selecciona una opción.');
+      if (cantidadAreas.value === 'otro') {
+        window.location.href = '/productos/cotizacion/personalizado/';
         return;
       }
-      if (cantidadAreas.value === "otro") {
-        window.location.href = "/productos/cotizacion/personalizado/";
-        return;
-      }
-      confirmarPregunta(cantidadAreas, btn2);
+      bloquearPregunta(cantidadAreas, btn2);
       pregunta3.classList.remove('hidden');
     });
 
-    // Pregunta 3 - Entrega express + cálculo final
     btn3.addEventListener('click', () => {
-      if (!express.value) {
-        alert('Por favor, selecciona una opción para la entrega express.');
-        return;
-      }
-      confirmarPregunta(express, btn3);
-
-      // Calcular total:
-      // Base: mínimo $400 + sumas de las opciones (tipoPlano + cantidadAreas + express)
-      // Nota: valores tipoPlano y cantidadAreas ya están en valores numéricos con el esquema que diste
-      // Pero tipoPlano tiene base 400 y extras sumados ya (por ejemplo: croquis sencillo 400, croquis con medidas 430, etc)
-      // Por eso tomamos tipoPlano.value directamente
+      if (!express.value) return alert('Selecciona una opción.');
+      bloquearPregunta(express, btn3);
 
       const total = Number(tipoPlano.value) + Number(cantidadAreas.value) + Number(express.value);
 
-      // Guardar total y tipoCotizacion en sessionStorage
       sessionStorage.setItem('totalCotizacion', total);
       sessionStorage.setItem('tipoCotizacion', 'producto');
       sessionStorage.setItem('producto', 'Plano General');
 
-      // Redirigir a página resultado sin pasar el total en la URL
       window.location.href = '/productos/cotizacion/total/';
     });
   </script>

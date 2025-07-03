@@ -162,7 +162,7 @@
   continuar1.addEventListener('click', () => {
     const profesional = document.getElementById('profesional').value;
     if (profesional === "no") {
-      window.location.href = "/productos/cotizacion/personalizada/";
+      window.location.href = "/productos/cotizacion/personalizado/";
     } else if (profesional === "si") {
       pregunta2.classList.remove("hidden");
       continuar1.style.display = "none";
@@ -172,7 +172,7 @@
   continuar2.addEventListener('click', () => {
     const tipo = document.getElementById('tipoPlano').value;
     if (tipo === "otro") {
-      window.location.href = "/productos/cotizacion/personalizada/";
+      window.location.href = "/productos/cotizacion/personalizado/";
     } else if (tipo !== "") {
       pregunta3.classList.remove("hidden");
       continuar2.style.display = "none";
@@ -182,7 +182,7 @@
   continuar3.addEventListener('click', () => {
     const areas = document.getElementById('cantidadAreas').value;
     if (areas === "otro") {
-      window.location.href = "/productos/cotizacion/personalizada/";
+      window.location.href = "/productos/cotizacion/personalizado/";
     } else if (areas !== "") {
       pregunta4.classList.remove("hidden");
       continuar3.style.display = "none";

@@ -13,11 +13,14 @@
       margin: 0;
       padding: 0;
     }
+    /* Para que el header y nav dinámicos mantengan estilos */
     header {
       background-color: #1E3A8A;
       color: white;
-      padding: 1rem;
+      padding: 2rem 1rem;
       text-align: center;
+      position: relative;
+      z-index: 10;
     }
     nav {
       display: flex;
@@ -83,21 +86,13 @@
 </head>
 <body>
 
-<header>
-  <h1>Fabrixis by Puchana</h1>
-  <p>Precision that plays off</p>
-</header>
-
-<nav>
-  <a href="/">Inicio</a>
-  <a href="/productos/">Productos</a>
-  <a href="/nosotros/">Sobre Nosotros</a>
-</nav>
+<!-- Contenedor donde cargaremos header + nav -->
+<div id="header-container"></div>
 
 <main>
   <h1>Solicita una cotización personalizada</h1>
 
-  <form id="personalizadaForm">
+  <form id="personalizadaForm" enctype="multipart/form-data">
     <label for="nombre">Nombre completo *</label>
     <input type="text" id="nombre" name="nombre" required />
 
@@ -113,10 +108,10 @@
     <label for="descripcionSolicitud">Describe tu solicitud *</label>
     <textarea id="descripcionSolicitud" name="descripcionSolicitud" required></textarea>
 
-    <label for="archivos">Sube archivos (PDF/JPG/PNG, máx. 3)</label>
+    <label for="archivos">Sube archivos (PDF/JPG/PNG, máximo 3)</label>
     <input type="file" id="archivos" name="archivos" accept=".pdf,.jpg,.jpeg,.png" multiple />
 
-    <label for="urgencia">¿Deseas respuesta urgente (menos de 24h)?</label>
+    <label for="urgencia">¿Deseas respuesta urgente (menos de 24h)? *</label>
     <select id="urgencia" name="urgencia" required>
       <option value="" disabled selected>Selecciona una opción</option>
       <option value="no" data-price="0">No</option>
@@ -128,11 +123,25 @@
 </main>
 
 <script>
+  // Cargar header + nav desde componentes/header.html
+  fetch('/componentes/header.html')
+    .then(response => response.text())
+    .then(html => {
+      document.getElementById('header-container').innerHTML = html;
+    })
+    .catch(err => {
+      console.error('Error cargando header:', err);
+    });
+
+  // Lógica del formulario
   document.getElementById('personalizadaForm').addEventListener('submit', function(e) {
     e.preventDefault();
-    const urgencia = document.getElementById('urgencia');
-    const extra = Number(urgencia.options[urgencia.selectedIndex].dataset.price || 0);
-    const total = 20 + extra;
+
+    const urgenciaSelect = document.getElementById('urgencia');
+    const extra = Number(urgenciaSelect.options[urgenciaSelect.selectedIndex].dataset.price || 0);
+    const totalBase = 20;
+    const total = totalBase + extra;
+
     window.location.href = `/productos/cotizacion/personalizado/resultado/?total=${total}`;
   });
 </script>

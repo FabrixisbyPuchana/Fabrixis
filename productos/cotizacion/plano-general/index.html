@@ -1,151 +1,85 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Plano General - Fabrixis</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resultado de Cotización - Fabrixis</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
   <style>
     body {
       font-family: 'Montserrat', sans-serif;
       background-color: #f4f7fa;
       color: #1E3A8A;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      text-align: center;
       padding: 2rem;
     }
 
-    header {
-      text-align: center;
-      margin-bottom: 2rem;
+    .container {
+      background-color: white;
+      padding: 3rem;
+      border-radius: 1.5rem;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     }
 
-    .form-group {
-      margin-bottom: 1.5rem;
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
     }
 
-    label {
-      font-weight: 600;
-      display: block;
-      margin-bottom: 0.5rem;
+    p.total {
+      font-size: 2rem;
+      font-weight: bold;
+      margin: 1rem 0 2rem;
     }
 
-    select, input {
-      width: 100%;
-      padding: 0.7rem;
-      border: 1px solid #ccc;
-      border-radius: 0.5rem;
-      margin-top: 0.3rem;
-    }
-
-    .hidden {
-      display: none;
+    .btn-group {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
     }
 
     .btn {
       background-color: #1E3A8A;
       color: white;
-      padding: 0.75rem 1.5rem;
+      padding: 0.8rem 1.8rem;
       border: none;
-      border-radius: 0.5rem;
-      cursor: pointer;
+      border-radius: 0.75rem;
       font-size: 1rem;
+      cursor: pointer;
+      text-decoration: none;
     }
 
     .btn:hover {
       background-color: #3749b2;
     }
+
+    @media(min-width: 500px) {
+      .btn-group {
+        flex-direction: row;
+        justify-content: center;
+      }
+    }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Plano General</h1>
-    <p>Desde $400 AUD</p>
-  </header>
-
-  <form id="cotizadorForm">
-    <!-- P0 -->
-    <div class="form-group">
-      <label>¿Eres un profesional con licencia?</label>
-      <select id="profesional" required onchange="checkProfesion(this.value)">
-        <option value="">Selecciona una opción</option>
-        <option value="si">Sí</option>
-        <option value="no">No</option>
-      </select>
+  <div class="container">
+    <h1>Resultado de Cotización</h1>
+    <p class="total" id="totalPrecio">Total estimado: $0 AUD</p>
+    <div class="btn-group">
+      <a href="#" class="btn">Realizar pago</a>
+      <a href="/productos/cotizacion/revision/" class="btn">Solicitar revisión personalizada</a>
     </div>
-
-    <div id="preguntasExtras" class="hidden">
-      <!-- P1 -->
-      <div class="form-group">
-        <label>Tipo de croquis:</label>
-        <select id="croquis">
-          <option value="base">Croquis sencillo</option>
-          <option value="medidas">Croquis con medidas</option>
-          <option value="tecnico">Croquis con elementos técnicos</option>
-          <option value="complejo">Croquis complejo</option>
-        </select>
-      </div>
-
-      <!-- P2 -->
-      <div class="form-group">
-        <label>Cantidad de áreas a diseñar:</label>
-        <select id="areas">
-          <option value="1-2">1 a 2 áreas</option>
-          <option value="3-5">3 a 5 áreas</option>
-          <option value="6-10">6 a 10 áreas</option>
-        </select>
-      </div>
-
-      <!-- P3 -->
-      <div class="form-group">
-        <label>¿Entrega express?</label>
-        <select id="express">
-          <option value="no">No</option>
-          <option value="si">Sí</option>
-        </select>
-      </div>
-    </div>
-
-    <button type="submit" class="btn">Calcular Precio</button>
-  </form>
+  </div>
 
   <script>
-    function checkProfesion(value) {
-      const extra = document.getElementById('preguntasExtras');
-      if (value === 'si') {
-        extra.classList.remove('hidden');
-      } else {
-        window.location.href = '/productos/cotizacion/revision/';
-      }
-    }
-
-    document.getElementById('cotizadorForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-
-      const precios = {
-        croquis: {
-          base: 400,
-          medidas: 430,
-          tecnico: 500,
-          complejo: 600
-        },
-        areas: {
-          '1-2': 0,
-          '3-5': 80,
-          '6-10': 200
-        },
-        express: {
-          no: 0,
-          si: 50
-        }
-      };
-
-      const tipoCroquis = document.getElementById('croquis').value;
-      const numAreas = document.getElementById('areas').value;
-      const entrega = document.getElementById('express').value;
-
-      const total = precios.croquis[tipoCroquis] + precios.areas[numAreas] + precios.express[entrega];
-
-      window.location.href = `/productos/cotizacion/plano-general/resultado.html?total=${total}`;
-    });
+    const params = new URLSearchParams(window.location.search);
+    const total = params.get("total");
+    document.getElementById("totalPrecio").textContent = `Total estimado: $${total} AUD`;
   </script>
 </body>
 </html>

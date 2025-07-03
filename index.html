@@ -1,53 +1,109 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Fabrixis by Puchana</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f4f7fa;
+    * {
       margin: 0;
       padding: 0;
-      color: #1E3A8A;
+      box-sizing: border-box;
     }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background-color: #f4f7fa;
+      color: #1E3A8A;
+      line-height: 1.6;
+    }
+
     header {
       background-color: #1E3A8A;
       color: white;
-      padding: 40px 20px;
+      padding: 2rem 1rem;
       text-align: center;
     }
-    section {
-      padding: 40px 20px;
-      max-width: 800px;
-      margin: auto;
+
+    nav {
+      display: flex;
+      justify-content: center;
+      background-color: #E5E7EB;
+      padding: 1rem;
     }
-    h2 {
-      color: #4B5563;
+
+    nav a {
+      margin: 0 1rem;
+      text-decoration: none;
+      color: #1E3A8A;
+      font-weight: 600;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: #3B82F6;
+    }
+
+    main {
+      padding: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    section {
+      margin-bottom: 3rem;
+    }
+
+    .hero {
+      background-color: #ffffff;
+      padding: 3rem;
+      border-radius: 1rem;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    .hero h2 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      color: #334155;
+    }
+
+    footer {
+      background-color: #1E3A8A;
+      color: white;
+      text-align: center;
+      padding: 1rem;
     }
   </style>
 </head>
 <body>
   <header>
     <h1>Fabrixis by Puchana</h1>
-    <p><em>Precision that plays off</em></p>
+    <p>Precision that plays off</p>
   </header>
 
-  <section>
-    <h2>Who We Are</h2>
-    <p>We design shop drawings and precision manufacturing plans to reduce construction errors and optimize resources. With global reach and technical excellence, we transform detail into action.</p>
+  <nav>
+    <a href="#inicio">Inicio</a>
+    <a href="#proyectos">Proyectos</a>
+    <a href="#productos">Productos</a>
+  </nav>
 
-    <h2>Our Services</h2>
-    <ul>
-      <li>Shop Drawings (Metal, Wood, Assembly)</li>
-      <li>CAD 2D/3D Drafting</li>
-      <li>Fabrication Drawings</li>
-      <li>Consulting for Technical Detailing</li>
-    </ul>
+  <main>
+    <section class="hero" id="inicio">
+      <h2>Bienvenido a Fabrixis</h2>
+      <p>Diseñamos planos técnicos con precisión e inteligencia para ayudarte a ahorrar en cada paso de tu proyecto.</p>
+    </section>
 
-    <h2>Contact</h2>
-    <p>Email: contact@fabrixis.com</p>
-  </section>
+    <!-- Las secciones de proyectos y productos se añadirán después -->
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Fabrixis. Todos los derechos reservados.</p>
+  </footer>
 </body>
 </html>

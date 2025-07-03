@@ -235,7 +235,7 @@
       const urgencia = document.getElementById('urgencia');
       const extra = Number(urgencia.options[urgencia.selectedIndex].dataset.price || 0);
       const total = 20 + extra;
-      window.location.href = `/productos/cotizacion/personalizada/resultado/?total=${total}`;
+      window.location.href = /productos/cotizacion/personalizada/resultado/?total=${total};
       return;
     }
 
@@ -250,7 +250,7 @@
 
     if (total < 400) total = 400;
 
-    window.location.href = `resultado/?total=${total}`;
+    window.location.href = resultado/?total=${total};
   });
 </script>
 

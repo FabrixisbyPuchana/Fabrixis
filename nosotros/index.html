@@ -65,8 +65,23 @@
     </div>
   </main>
 
-  <footer>
-    <p>&copy; 2025 Fabrixis by Puchana</p>
-  </footer>
+  <!-- Cargar dinámicamente el footer -->
+  <div id="footer-container"></div>
+
+  <!-- Scripts para incluir header y footer -->
+  <script>
+    fetch("/componentes/header.html")
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById("header-container").innerHTML = data;
+      });
+
+    fetch("/componentes/footer.html")
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById("footer-container").innerHTML = data;
+      });
+  </script>
+
 </body>
 </html>

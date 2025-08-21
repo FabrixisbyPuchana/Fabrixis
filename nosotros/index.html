@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
   <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-FF47V6FGCR"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-FF47V6FGCR');
-</script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FF47V6FGCR"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FF47V6FGCR');
+  </script>
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -16,10 +16,6 @@
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: 'Montserrat', sans-serif; background: linear-gradient(135deg, #f4f7fa, #e0e7ff); color: #1E3A8A; line-height: 1.7; text-align: center; }
-    header { background-color: #1E3A8A; color: white; padding: 3rem 1rem; text-align: center; }
-    nav { display: flex; justify-content: center; background-color: #E5E7EB; padding: 1rem; }
-    nav a { margin: 0 1rem; text-decoration: none; color: #1E3A8A; font-weight: 600; transition: color 0.3s; }
-    nav a:hover { color: #3B82F6; }
     main { padding: 3rem 1rem; max-width: 900px; margin: 0 auto; }
     .section-card { background: linear-gradient(145deg, #ffffff, #f0f4ff); padding: 3rem; margin: 2rem auto; border-radius: 1.5rem; box-shadow: 0 8px 20px rgba(0,0,0,0.12); transition: transform 0.4s; }
     .section-card:hover { transform: translateY(-5px); }
@@ -31,16 +27,9 @@
   </style>
 </head>
 <body>
-  <header>
-    <h1>Fabrixis by Puchana</h1>
-    <p>Precision that plays off</p>
-  </header>
 
-  <nav>
-    <a href="/">Inicio</a>
-    <a href="/productos/">Productos</a>
-    <a href="/nosotros/">Sobre nosotros</a>
-  </nav>
+  <!-- Header dinámico -->
+  <div id="header-container"></div>
 
   <main>
     <section class="section-card">
@@ -59,13 +48,13 @@
       <p>El conocimiento detrás de Fabrixis proviene de años de trabajo profesional en Colombia y Estados Unidos, colaborando con distintas empresas y proyectos complejos. Este recorrido nos ha permitido identificar oportunidades de mejora y eficiencia que ahora ponemos a disposición de nuestros clientes de manera digital y profesional.</p>
     </section>
 
-    <!-- Botón separado sin recuadro blanco -->
+    <!-- Botón CTA sin recuadro blanco -->
     <div class="cta-container">
       <a href="/productos/" class="cta-button">Conoce nuestros productos</a>
     </div>
   </main>
 
-  <!-- Cargar dinámicamente el footer -->
+  <!-- Footer dinámico -->
   <div id="footer-container"></div>
 
   <!-- Scripts para incluir header y footer -->

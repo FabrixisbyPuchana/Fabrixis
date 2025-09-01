@@ -15,7 +15,13 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'Montserrat', sans-serif; background: linear-gradient(135deg, #f4f7fa, #e0e7ff); color: #1E3A8A; line-height: 1.7; text-align: center; }
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: linear-gradient(135deg, #f4f7fa, #e0e7ff);
+      color: #1E3A8A;
+      line-height: 1.7;
+      text-align: center;
+    }
     main { padding: 3rem 1rem; max-width: 1000px; margin: 0 auto; }
 
     /* Contenedor del video: sin recuadro blanco, solo bordes redondeados y sombra suave */
@@ -32,13 +38,40 @@
       display: block;
     }
 
-    /* Espaciado superior similar al resto del sitio */
+    /* Título de la página */
     .page-title {
       font-size: 2rem;
       font-weight: 700;
       margin-bottom: 1.5rem;
       color: #1E3A8A;
     }
+
+    /* CTA (sin recuadro blanco, solo el botón) */
+    .cta-container {
+      margin-top: 2rem;
+      display: flex;
+      justify-content: center;
+    }
+    .cta-button {
+      display: inline-block;
+      padding: 1rem 2rem;
+      font-size: 1.05rem;
+      color: #ffffff;
+      background-color: #1E3A8A; /* azul de la marca */
+      border-radius: 0.8rem;
+      text-decoration: none;
+      font-weight: 700;
+      border: none;
+      outline: none;
+      transition: transform 0.18s ease, background-color 0.18s ease;
+    }
+    .cta-button:hover,
+    .cta-button:focus {
+      background-color: #163264;
+      transform: translateY(-3px);
+    }
+
+    footer { margin-top: 3rem; }
   </style>
 </head>
 <body>
@@ -49,12 +82,17 @@
   <main>
     <h1 class="page-title">Sobre nosotros</h1>
 
-    <div class="video-wrapper">
-      <!-- Aquí ya está la ruta correcta al video -->
+    <div class="video-wrapper" aria-hidden="false">
+      <!-- Asegúrate que la ruta exista en tu repo: /videos/presentacion/fabrixis.mp4 -->
       <video controls playsinline muted poster="/imagenes/poster-fabrixis.jpg">
         <source src="/videos/presentacion/fabrixis.mp4" type="video/mp4">
         Tu navegador no soporta la reproducción de video.
       </video>
+    </div>
+
+    <!-- CTA: botón limpio, sin recuadro blanco -->
+    <div class="cta-container">
+      <a href="/productos/" class="cta-button" role="button">Conoce nuestros productos</a>
     </div>
   </main>
 
@@ -63,13 +101,23 @@
 
   <!-- Scripts para incluir header y footer -->
   <script>
+    // cargar header
     fetch("/componentes/header.html")
-      .then(r => r.text())
-      .then(html => { document.getElementById("header-container").innerHTML = html; });
+      .then(r => {
+        if (!r.ok) throw new Error('No se pudo cargar header');
+        return r.text();
+      })
+      .then(html => { document.getElementById("header-container").innerHTML = html; })
+      .catch(() => { /* silencioso - en caso de fallo, no rompe la página */ });
 
+    // cargar footer
     fetch("/componentes/footer.html")
-      .then(r => r.text())
-      .then(html => { document.getElementById("footer-container").innerHTML = html; });
+      .then(r => {
+        if (!r.ok) throw new Error('No se pudo cargar footer');
+        return r.text();
+      })
+      .then(html => { document.getElementById("footer-container").innerHTML = html; })
+      .catch(() => { /* silencioso */ });
   </script>
 
 </body>
